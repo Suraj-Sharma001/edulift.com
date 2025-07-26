@@ -1,5 +1,4 @@
 'use client'; 
-
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -21,20 +20,53 @@ export default function Navbar() {
 
   const navItems = ['Home', 'Scholarships', 'Internships', 'Community'];
 
+  async function loginUser() {
+  try {
+    const res = await fetch('/api/auth/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, password, role, username }),  
+    });
+    
+    const data = await res.json();
+    
+    if(data.ok) {
+      const {token, user} = data;
+      localStorage.setItem('isAuthenticated', 'true');
+      localStorage.setItem('token', token);
+      localStorage.setItem('user', JSON.stringify(user));  // save complete user object
+      
+      // Trigger a storage event to update other components
+      window.dispatchEvent(new Event('storage'));
+      
+      // Redirect to home page
+      router.push('/');
+      
+    } else {
+      console.log(err);
+      alert(data.error || 'Login failed');
+    }
+  } catch (error) {
+    console.error('Login error:', error);
+    alert('An error occurred during login');
+  }
+}
+
   // Check authentication status on component mount
   useEffect(() => {
     const checkAuthStatus = () => {
       const authStatus = localStorage.getItem('isAuthenticated');
       const token = localStorage.getItem('token');
+      const userStr = localStorage.getItem('user');
       
-      if (authStatus === 'true' && token) {
+      if (authStatus === 'true' && token && userStr) {
         setIsAuthenticated(true);
-        // You can also decode the token to get user info
-        // For now, we'll use a placeholder
         setUserProfile({
-          name: 'User', // You can get this from token or separate API call
-          email: 'user@example.com',
-          role: 'candidate' // or 'recruiter'
+          name: user.username,
+          email: user.email,
+          role: user.role 
         });
       } else {
         setIsAuthenticated(false);
@@ -238,4 +270,4 @@ export default function Navbar() {
       )}
     </nav>
   );
-}
+} 
