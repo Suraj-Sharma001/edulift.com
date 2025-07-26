@@ -80,7 +80,13 @@ export async function registerUser(req) {
                 { 
                     message: `${role.charAt(0).toUpperCase() + role.slice(1)} registered successfully!`,
                     ok: true,
-                    userId: savedUser._id
+                    token: 'fake-token-or-real-jwt', // replace with real JWT if needed
+                    user: {
+                        _id: savedUser._id,
+                        name: savedUser.name,
+                        email: savedUser.email,
+                        role: role
+                    }    
                 },
                 { status: 200 }
             );
@@ -172,5 +178,25 @@ export async function loginUser(req) {
             },
             { status: 500 }
         )
+    }
+}
+
+export async function logoutUser() {
+    try {
+        const response = NextResponse.json({ message: 'Logout successful' });
+        response.cookies.set('token', '', {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict',
+            path: '/',
+            expires: new Date(0) // Set to past date to clear the cookie
+        });
+        return response;
+    } catch (err) {
+        console.error('Logout error:', err);
+        return NextResponse.json(
+            { error: 'Failed to logout', details: err.message },
+            { status: 500 }
+        );
     }
 }
