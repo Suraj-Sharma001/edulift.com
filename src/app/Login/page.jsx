@@ -28,9 +28,20 @@ async function loginUser() {
     const data = await res.json();
     
     if(data.ok) {
-      const {token} = data;
+      const { token, user } = data;
+      
+      // Store authentication data
       localStorage.setItem('isAuthenticated', 'true');
       localStorage.setItem('token', token);
+      
+      // Store user data with the correct structure for navbar
+      const userDataForStorage = {
+        username: user.name, // Map 'name' to 'username' for navbar compatibility
+        email: user.email,
+        role: user.role,
+        _id: user._id
+      };
+      localStorage.setItem('user', JSON.stringify(userDataForStorage));
       
       // Trigger a storage event to update other components
       window.dispatchEvent(new Event('storage'));

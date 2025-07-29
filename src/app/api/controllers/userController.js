@@ -4,9 +4,8 @@ import bcrypt from 'bcryptjs';
 import { NextResponse } from 'next/server';
 import { connectDB } from '../config/db';
 
-
-// register user
-export async function registerUser(req) {
+// Register user
+export async function registerUser (req) {
     try {
         // Ensure database connection
         await connectDB();
@@ -57,7 +56,7 @@ export async function registerUser(req) {
         const userAlreadyExist = await Model.findOne({ email });
         if (userAlreadyExist) {
             return NextResponse.json(
-                { error: 'User already exists' },
+                { error: 'User  already exists' },
                 { status: 400 }
             );
         }
@@ -66,15 +65,16 @@ export async function registerUser(req) {
         const hashedPassword = await bcrypt.hash(password, 10);
         
         // Create new user
-        const newUser = new Model({
+        const newUser  = new Model({
             name, 
             email, 
-            password: hashedPassword
+            password: hashedPassword,
+            role // Include role in the user object
         });
         
         // Save user with detailed error handling
         try {
-            const savedUser = await newUser.save();
+            const savedUser  = await newUser .save();
             
             return NextResponse.json(
                 { 
@@ -82,10 +82,10 @@ export async function registerUser(req) {
                     ok: true,
                     token: 'fake-token-or-real-jwt', // replace with real JWT if needed
                     user: {
-                        _id: savedUser._id,
-                        name: savedUser.name,
-                        email: savedUser.email,
-                        role: role
+                        _id: savedUser ._id,
+                        name: savedUser .name,
+                        email: savedUser .email,
+                        role: savedUser .role // Include role in the response
                     }    
                 },
                 { status: 200 }
@@ -124,10 +124,8 @@ export async function registerUser(req) {
     }
 }
 
-
-// login user
-
-export async function loginUser(req) {
+// Login user
+export async function loginUser (req) {
     try {
         await connectDB();
 
@@ -140,35 +138,41 @@ export async function loginUser(req) {
         }
 
         // Check if user exists or not
-        let isUserExist = await Candidate.findOne({email})
-        let userRole = 'candidate'
+        let isUserExist = await Candidate.findOne({ email });
+        let userRole = 'candidate';
         if (!isUserExist) {
-            isUserExist = await Recruiter.findOne({email})
-            userRole = 'recruiter'
+            isUserExist = await Recruiter.findOne({ email });
+            userRole = 'recruiter';
         }
 
         if (!isUserExist) {
             return NextResponse.json(
-                { error: 'User not found' },
+                { error: 'User  not found' },
                 { status: 400 }
             );
         }
+
         // Check if password is correct
         const isPasswordMatch = await bcrypt.compare(password, isUserExist.password);
         if (!isPasswordMatch) {
             return NextResponse.json(
                 { error: 'Invalid credentials' },
                 { status: 400 }
-            )
+            );
         }
       
-        // Set cookie   
+        // Return response with token and user data
         return NextResponse.json({
             message: 'Login successful',
             ok: true,
-            userId: isUserExist._id,
-            role: isUserExist.role
-        })
+            token: 'your-jwt-token-here', // Replace with actual JWT token generation
+            user: {
+                _id: isUserExist._id,
+                name: isUserExist.name,
+                email: isUserExist.email,
+                role: userRole // Include role in the response
+            }
+        });
     } catch(err) {
         console.error('Unexpected login error:', err);
         return NextResponse.json(
@@ -177,11 +181,12 @@ export async function loginUser(req) {
                 details: err.message 
             },
             { status: 500 }
-        )
+        );
     }
 }
 
-export async function logoutUser() {
+// Logout user
+export async function logoutUser () {
     try {
         const response = NextResponse.json({ message: 'Logout successful' });
         response.cookies.set('token', '', {

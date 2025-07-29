@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [userProfile, setUserProfile] = useState(null);
+  const [userProfile, setUserProfile] = useState(null); // Corrected state name
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
   const router = useRouter();
 
@@ -20,40 +20,6 @@ export default function Navbar() {
 
   const navItems = ['Home', 'Scholarships', 'Internships', 'Community'];
 
-  async function loginUser() {
-  try {
-    const res = await fetch('/api/auth/signup', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email, password, role, username }),  
-    });
-    
-    const data = await res.json();
-    
-    if(data.ok) {
-      const {token, user} = data;
-      localStorage.setItem('isAuthenticated', 'true');
-      localStorage.setItem('token', token);
-      localStorage.setItem('user', JSON.stringify(user));  // save complete user object
-      
-      // Trigger a storage event to update other components
-      window.dispatchEvent(new Event('storage'));
-      
-      // Redirect to home page
-      router.push('/');
-      
-    } else {
-      console.log(err);
-      alert(data.error || 'Login failed');
-    }
-  } catch (error) {
-    console.error('Login error:', error);
-    alert('An error occurred during login');
-  }
-}
-
   // Check authentication status on component mount
   useEffect(() => {
     const checkAuthStatus = () => {
@@ -62,9 +28,10 @@ export default function Navbar() {
       const userStr = localStorage.getItem('user');
       
       if (authStatus === 'true' && token && userStr) {
+        const user = JSON.parse(userStr); // Parse user data
         setIsAuthenticated(true);
         setUserProfile({
-          name: user.username,
+          name: user.username, // Ensure this matches your user object structure
           email: user.email,
           role: user.role 
         });
@@ -85,6 +52,7 @@ export default function Navbar() {
   const handleLogout = () => {
     localStorage.removeItem('isAuthenticated');
     localStorage.removeItem('token');
+    localStorage.removeItem('user');
     setIsAuthenticated(false);
     setUserProfile(null);
     setShowProfileDropdown(false);
@@ -110,8 +78,8 @@ export default function Navbar() {
             </Link>
           ))}
           
-          {/* Conditional rendering based on authentication */}
-          {isAuthenticated && userProfile ? (
+          {/* Profile Button for Authenticated Users */}
+          {isAuthenticated && userProfile ? ( // Check if authenticated and userProfile is set
             <div className="relative ml-4">
               <button 
                 onClick={toggleProfileDropdown}
@@ -119,7 +87,7 @@ export default function Navbar() {
               >
                 <div className="w-8 h-8 bg-orange-200 rounded-full flex items-center justify-center">
                   <span className="text-orange-600 font-bold text-sm">
-                    {userProfile.name.charAt(0).toUpperCase()}
+                    {userProfile.name.charAt(0).toUpperCase()} {/* Display first letter of name */}
                   </span>
                 </div>
                 <span className="font-medium">{userProfile.name}</span>
@@ -143,14 +111,14 @@ export default function Navbar() {
                     <p className="text-xs text-gray-400 capitalize">{userProfile.role}</p>
                   </div>
                   <Link 
-                    href="/profile" 
+                    href="/Profile" 
                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200"
                     onClick={() => setShowProfileDropdown(false)}
                   >
                     View Profile
                   </Link>
                   <Link 
-                    href="/settings" 
+                    href="/Setting" 
                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200"
                     onClick={() => setShowProfileDropdown(false)}
                   >
@@ -270,4 +238,4 @@ export default function Navbar() {
       )}
     </nav>
   );
-} 
+}
