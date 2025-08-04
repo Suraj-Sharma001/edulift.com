@@ -60,9 +60,9 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="bg-gradient-to-r from-orange-400 to-orange-400 text-white p-4 shadow-lg sticky top-0 z-50">
+    <nav className="bg-gradient-to-r from-[#232946] to-[#121629] text-[#fffffe] p-4 shadow-lg sticky top-0 z-50">
       <div className="max-w-6xl mx-auto flex justify-between items-center">
-        <Link href='/' className="text-2xl font-bold hover:text-orange-200 transition-colors duration-300 flex items-center">
+        <Link href='/' className="text-2xl font-bold hover:text-[#eebbc3] transition-colors duration-300 flex items-center">
           <span className="mr-2">📚</span> EduLift
         </Link>
         
@@ -72,7 +72,7 @@ export default function Navbar() {
             <Link 
               key={item} 
               href={item === 'Home' ? '/' : `/${item}`}
-              className="hover:text-orange-200 font-medium transition-colors duration-300 border-b-2 border-transparent hover:border-orange-200 pb-1"
+              className="hover:text-[#eebbc3] font-medium transition-colors duration-300 border-b-2 border-transparent hover:border-[#eebbc3] pb-1"
             >
               {item}
             </Link>
@@ -83,10 +83,10 @@ export default function Navbar() {
             <div className="relative ml-4">
               <button 
                 onClick={toggleProfileDropdown}
-                className="flex items-center space-x-2 bg-white bg-opacity-20 hover:bg-opacity-30 px-4 py-2 rounded-lg transition-colors duration-300"
+                className="flex items-center space-x-2 bg-[#b8c1ec] bg-opacity-20 hover:bg-opacity-30 px-4 py-2 rounded-lg transition-colors duration-300"
               >
-                <div className="w-8 h-8 bg-orange-200 rounded-full flex items-center justify-center">
-                  <span className="text-orange-600 font-bold text-sm">
+                <div className="w-8 h-8 bg-[#eebbc3] rounded-full flex items-center justify-center">
+                  <span className="text-[#232946] font-bold text-sm">
                     {userProfile.name.charAt(0).toUpperCase()} {/* Display first letter of name */}
                   </span>
                 </div>
@@ -104,29 +104,29 @@ export default function Navbar() {
               
               {/* Profile Dropdown */}
               {showProfileDropdown && ( 
-                <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 z-10">
-                  <div className="px-4 py-2 border-b border-gray-200">
-                    <p className="text-sm font-medium text-gray-900">{userProfile.name}</p>
-                    <p className="text-sm text-gray-500">{userProfile.email}</p>
-                    <p className="text-xs text-gray-400 capitalize">{userProfile.role}</p>
+                <div className="absolute right-0 mt-2 w-48 bg-[#232946] rounded-lg shadow-lg py-2 z-10">
+                  <div className="px-4 py-2 border-b border-[#b8c1ec]">
+                    <p className="text-sm font-medium text-[#eebbc3]">{userProfile.name}</p>
+                    <p className="text-sm text-[#b8c1ec]">{userProfile.email}</p>
+                    <p className="text-xs text-[#b8c1ec] capitalize">{userProfile.role}</p>
                   </div>
                   <Link 
                     href="/Profile" 
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200"
+                    className="block px-4 py-2 text-sm text-[#b8c1ec] hover:bg-[#eebbc3] hover:text-[#232946] transition-colors duration-200"
                     onClick={() => setShowProfileDropdown(false)}
                   >
                     View Profile
                   </Link>
                   <Link 
                     href="/Setting" 
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-200"
+                    className="block px-4 py-2 text-sm text-[#b8c1ec] hover:bg-[#eebbc3] hover:text-[#232946] transition-colors duration-200"
                     onClick={() => setShowProfileDropdown(false)}
                   >
                     Settings
                   </Link>
                   <button 
                     onClick={handleLogout}
-                    className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors duration-200"
+                    className="w-full text-left px-4 py-2 text-sm text-[#eebbc3] hover:bg-[#b8c1ec] hover:text-[#232946] transition-colors duration-200"
                   >
                     Logout
                   </button>
@@ -137,13 +137,13 @@ export default function Navbar() {
             <div className="flex space-x-4 ml-4">
               <Link 
                 href='/Login' 
-                className="border-2 border-white hover:border-orange-200 text-white px-4 py-1.5 rounded-lg font-medium hover:text-orange-200 transition-colors duration-300"
+                className="border-2 border-[#b8c1ec] hover:border-[#eebbc3] text-[#b8c1ec] px-4 py-1.5 rounded-lg font-medium hover:text-[#eebbc3] transition-colors duration-300"
               >
                 Log In
               </Link>
               <Link 
                 href='/SignUp' 
-                className="bg-white text-orange-600 px-4 py-2 rounded-lg font-bold hover:bg-orange-100 transition-colors duration-300 shadow-md"
+                className="bg-[#eebbc3] text-[#232946] px-4 py-2 rounded-lg font-bold hover:bg-[#b8c1ec] hover:text-[#232946] transition-colors duration-300 shadow-md"
               >
                 Sign Up
               </Link>
@@ -153,7 +153,7 @@ export default function Navbar() {
         
         {/* Mobile Menu Button */}
         <button 
-          className="md:hidden text-white focus:outline-none" 
+          className="md:hidden text-[#b8c1ec] focus:outline-none" 
           onClick={toggleMenu}
           aria-label="Toggle menu"
         >
@@ -171,13 +171,13 @@ export default function Navbar() {
       
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="md:hidden bg-orange-600 mt-4 rounded-lg shadow-inner p-4 animate-fade-in-down">
+        <div className="md:hidden bg-[#232946] mt-4 rounded-lg shadow-inner p-4 animate-fade-in-down">
           <div className="flex flex-col space-y-4">
             {navItems.map((item) => (
               <Link 
                 key={item} 
                 href={item === 'Home' ? '/' : `/${item.toLowerCase()}`}
-                className="hover:bg-orange-700 font-medium transition-colors duration-300 px-4 py-2 rounded-md"
+                className="hover:bg-[#eebbc3] hover:text-[#232946] font-medium transition-colors duration-300 px-4 py-2 rounded-md"
                 onClick={() => setIsMenuOpen(false)}
               >
                 {item}
@@ -186,21 +186,21 @@ export default function Navbar() {
             
             {/* Mobile Auth Section */}
             {isAuthenticated && userProfile ? (
-              <div className="pt-2 border-t border-orange-400 space-y-2">
-                <div className="px-4 py-2 bg-orange-700 rounded-md">
-                  <p className="font-medium">{userProfile.name}</p>
-                  <p className="text-sm text-orange-200">{userProfile.email}</p>
+              <div className="pt-2 border-t border-[#b8c1ec] space-y-2">
+                <div className="px-4 py-2 bg-[#eebbc3] rounded-md">
+                  <p className="font-medium text-[#232946]">{userProfile.name}</p>
+                  <p className="text-sm text-[#232946]">{userProfile.email}</p>
                 </div>
                 <Link 
                   href="/profile" 
-                  className="block hover:bg-orange-700 font-medium transition-colors duration-300 px-4 py-2 rounded-md"
+                  className="block hover:bg-[#b8c1ec] hover:text-[#232946] font-medium transition-colors duration-300 px-4 py-2 rounded-md"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   View Profile
                 </Link>
                 <Link 
                   href="/settings" 
-                  className="block hover:bg-orange-700 font-medium transition-colors duration-300 px-4 py-2 rounded-md"
+                  className="block hover:bg-[#b8c1ec] hover:text-[#232946] font-medium transition-colors duration-300 px-4 py-2 rounded-md"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Settings
@@ -210,23 +210,23 @@ export default function Navbar() {
                     handleLogout();
                     setIsMenuOpen(false);
                   }}
-                  className="w-full text-left hover:bg-red-600 font-medium transition-colors duration-300 px-4 py-2 rounded-md"
+                  className="w-full text-left hover:bg-[#b8c1ec] hover:text-[#232946] font-medium transition-colors duration-300 px-4 py-2 rounded-md"
                 >
                   Logout
                 </button>
               </div>
             ) : (
-              <div className="flex flex-col space-y-2 pt-2 border-t border-orange-400">
+              <div className="flex flex-col space-y-2 pt-2 border-t border-[#b8c1ec]">
                 <Link 
                   href='/Login' 
-                  className="text-center hover:bg-orange-700 font-medium transition-colors duration-300 px-4 py-2 rounded-md"
+                  className="text-center hover:bg-[#eebbc3] hover:text-[#232946] font-medium transition-colors duration-300 px-4 py-2 rounded-md"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Log In
                 </Link>
                 <Link 
                   href='/SignUp' 
-                  className="text-center bg-white text-orange-600 px-4 py-2 rounded-lg font-bold hover:bg-orange-100 transition-colors duration-300"
+                  className="text-center bg-[#eebbc3] text-[#232946] px-4 py-2 rounded-lg font-bold hover:bg-[#b8c1ec] hover:text-[#232946] transition-colors duration-300"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Sign Up
