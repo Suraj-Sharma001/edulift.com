@@ -9,7 +9,7 @@ export const MetaData = {
 export default async function Layout({ children }) {
   return (
     <html lang="en">
-      <body className="min-h-screen bg-gray-100">
+      <body className="min-h-screen bg-gradient-to-r from-[#232946] to-[#121629] text-[#fffffe]">
           <Navbar />
           {children}
       </body>
