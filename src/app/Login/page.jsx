@@ -1,6 +1,6 @@
 "use client"
 
-import React, { use, useState } from 'react';
+import React, { useState } from 'react';
 // Importing necessary libraries and components
 import Link from 'next/link';
 import { useRouter } from 'next/navigation'; // Import useRouter to handle redirection

@@ -121,7 +121,7 @@ const InternshipPage = () => {
 
   const handleSubmitApplication = (e) => {
     e.preventDefault();
-    console.log("Application submitted:", applicationData);
+    // Application submitted successfully
     setShowApplication(false);
     setApplicationData({
       name: "",

@@ -19,9 +19,14 @@ const ScholarshipsPage = () => {
   
   const itemsPerPage = 4
   
-  // Fetch scholarships from the API
+  // Component mounted effect
   useEffect(() => {
-    const fetchScholarships = async () => {
+    // Component initialization logic can go here if needed
+  }, [])
+  
+  // Load mock data instead of API call to avoid mobile issues
+  useEffect(() => {
+    const loadMockData = async () => {
       try {
         setLoading(true)
         setError(null)
@@ -69,20 +74,15 @@ const ScholarshipsPage = () => {
         
         setScholarships(data)
         setLoading(false)
-      } catch (error) {
-        console.error('Fetch error:', error)
-        if (error.name === 'AbortError') {
-          setError('Request timed out. Please check your internet connection and try again.')
-        } else if (error.name === 'TypeError' && error.message.includes('fetch')) {
-          setError('Network error. Please check your internet connection and try again.')
-        } else {
-          setError(error.message || 'An unexpected error occurred. Please try again.')
+              } catch (error) {
+          console.error('Error loading scholarships:', error)
+          setError('Failed to load scholarships. Please try again.')
+          setLoading(false)
         }
-        setLoading(false)
-      }
     }
 
-    fetchScholarships()
+    // Simulate loading delay
+    setTimeout(loadMockData, 1000)
   }, [])
 
   // Filter and sort scholarships based on search, category, and sort criteria
@@ -103,11 +103,12 @@ const ScholarshipsPage = () => {
     if (sortBy) {
       switch (sortBy) {
         case 'recent':
-          // No sorting needed as we assume the array is already in chronological order
+          // Sort by ID (newest first)
+          filtered = [...filtered].sort((a, b) => b.id - a.id)
           break
         case 'popular':
-          // In a real application, this would use a popularity metric
-          filtered = [...filtered].sort((a, b) => b.id - a.id)
+          // Sort by amount (highest first)
+          filtered = [...filtered].sort((a, b) => parseInt(b.amount.replace(/[^0-9]/g, '')) - parseInt(a.amount.replace(/[^0-9]/g, '')))
           break
         case 'ending-soon':
           filtered = [...filtered].sort((a, b) => new Date(a.deadline) - new Date(b.deadline))

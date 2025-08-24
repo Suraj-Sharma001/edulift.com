@@ -36,7 +36,7 @@ const Page = () => {
         router.push('/Login'); // Fixed path with string
         
       } else {
-        alert(data.err || 'Registration failed');
+        alert(data.error || 'Registration failed');
       }
     } catch (error) {
       console.error('Registration error:', error);

@@ -56,7 +56,7 @@ export async function registerUser (req) {
         const userAlreadyExist = await Model.findOne({ email });
         if (userAlreadyExist) {
             return NextResponse.json(
-                { error: 'User  already exists' },
+                { error: 'User already exists' },
                 { status: 400 }
             );
         }
@@ -80,12 +80,12 @@ export async function registerUser (req) {
                 { 
                     message: `${role.charAt(0).toUpperCase() + role.slice(1)} registered successfully!`,
                     ok: true,
-                    token: 'fake-token-or-real-jwt', // replace with real JWT if needed
+                    token: 'fake-token-or-real-jwt', // TODO: Replace with real JWT token generation
                     user: {
-                        _id: savedUser ._id,
-                        name: savedUser .name,
-                        email: savedUser .email,
-                        role: savedUser .role // Include role in the response
+                        _id: savedUser._id,
+                        name: savedUser.name,
+                        email: savedUser.email,
+                        role: savedUser.role // Include role in the response
                     }    
                 },
                 { status: 200 }
@@ -147,7 +147,7 @@ export async function loginUser (req) {
 
         if (!isUserExist) {
             return NextResponse.json(
-                { error: 'User  not found' },
+                { error: 'User not found' },
                 { status: 400 }
             );
         }
@@ -165,7 +165,7 @@ export async function loginUser (req) {
         return NextResponse.json({
             message: 'Login successful',
             ok: true,
-            token: 'your-jwt-token-here', // Replace with actual JWT token generation
+            token: 'your-jwt-token-here', // TODO: Replace with actual JWT token generation using jsonwebtoken
             user: {
                 _id: isUserExist._id,
                 name: isUserExist.name,
