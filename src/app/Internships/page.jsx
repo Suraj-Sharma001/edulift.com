@@ -46,60 +46,60 @@ const InternshipPage = () => {
       skills: ["JavaScript", "React", "Node.js", "Mobile Development", "Git", "API Integration"],
     },
     {
-      title: "Software Development",
+      title: "Data Science",
       items: [
-        "Web & Mobile Development",
+        "Machine Learning & Analytics",
         "3 Month Duration",
         "Remote / Hybrid",
         "Stipend Available",
       ],
       description:
-        "Join our development team to build cutting-edge educational technology solutions. You'll work with modern frameworks like React, Node.js, and mobile technologies to create impactful learning platforms.",
+        "Work on exciting data science projects that help improve educational outcomes. You'll analyze student data, build predictive models, and create insights that drive decision-making.",
       responsibilities: [
-        "Develop responsive web applications using React and modern JavaScript",
-        "Build mobile applications for iOS and Android platforms",
-        "Collaborate with designers to implement user-friendly interfaces",
-        "Write clean, maintainable, and well-documented code",
-        "Participate in code reviews and testing processes",
-        "Work with APIs and database systems",
+        "Analyze large datasets to extract meaningful insights",
+        "Build and deploy machine learning models",
+        "Create data visualizations and dashboards",
+        "Collaborate with cross-functional teams",
+        "Present findings to stakeholders",
+        "Contribute to research and development initiatives",
       ],
       requirements: [
-        "Currently pursuing or recently completed Computer Science/IT degree",
-        "Strong knowledge of JavaScript, HTML, and CSS",
-        "Experience with React, Vue.js, or Angular",
-        "Familiarity with version control systems (Git)",
-        "Basic understanding of backend technologies",
-        "Problem-solving mindset and attention to detail",
+        "Currently pursuing or recently completed Data Science/Statistics degree",
+        "Strong knowledge of Python, R, or similar programming languages",
+        "Experience with machine learning libraries and frameworks",
+        "Familiarity with data visualization tools",
+        "Understanding of statistical concepts",
+        "Strong analytical and problem-solving skills",
       ],
-      skills: ["JavaScript", "React", "Node.js", "Mobile Development", "Git", "API Integration"],
+      skills: ["Python", "Machine Learning", "Data Analysis", "SQL", "Statistics", "Visualization"],
     },
     {
-      title: "Software Development",
+      title: "UI/UX Design",
       items: [
-        "Web & Mobile Development",
+        "User Experience Design",
         "3 Month Duration",
         "Remote / Hybrid",
         "Stipend Available",
       ],
       description:
-        "Join our development team to build cutting-edge educational technology solutions. You'll work with modern frameworks like React, Node.js, and mobile technologies to create impactful learning platforms.",
+        "Create beautiful and intuitive user experiences for our educational platform. You'll work on user research, wireframing, prototyping, and visual design to enhance student engagement.",
       responsibilities: [
-        "Develop responsive web applications using React and modern JavaScript",
-        "Build mobile applications for iOS and Android platforms",
-        "Collaborate with designers to implement user-friendly interfaces",
-        "Write clean, maintainable, and well-documented code",
-        "Participate in code reviews and testing processes",
-        "Work with APIs and database systems",
+        "Conduct user research and usability testing",
+        "Create wireframes, prototypes, and high-fidelity designs",
+        "Collaborate with developers to implement designs",
+        "Ensure consistency across all design elements",
+        "Gather and incorporate user feedback",
+        "Stay updated with design trends and best practices",
       ],
       requirements: [
-        "Currently pursuing or recently completed Computer Science/IT degree",
-        "Strong knowledge of JavaScript, HTML, and CSS",
-        "Experience with React, Vue.js, or Angular",
-        "Familiarity with version control systems (Git)",
-        "Basic understanding of backend technologies",
-        "Problem-solving mindset and attention to detail",
+        "Currently pursuing or recently completed Design/UX degree",
+        "Proficiency in design tools like Figma, Sketch, or Adobe Creative Suite",
+        "Understanding of user-centered design principles",
+        "Experience with prototyping and user testing",
+        "Strong visual design and typography skills",
+        "Excellent communication and collaboration abilities",
       ],
-      skills: ["JavaScript", "React", "Node.js", "Mobile Development", "Git", "API Integration"],
+      skills: ["Figma", "User Research", "Prototyping", "Visual Design", "Wireframing", "Usability Testing"],
     },
   ];
 
@@ -138,18 +138,18 @@ const InternshipPage = () => {
 
   if (showApplication) {
     return (
-      <div className="container mx-auto px-4 py-12">
-        <div className="max-w-2xl mx-auto">
-          <button onClick={() => setShowApplication(false)} className="mb-6 flex items-center text-blue-600 hover:text-blue-800 transition-colors">
+      <div className="min-h-screen bg-gradient-to-br from-[#232946] via-[#121629] to-[#232946] text-[#fffffe] py-12">
+        <div className="max-w-2xl mx-auto px-4 sm:px-6">
+          <button onClick={() => setShowApplication(false)} className="mb-6 flex items-center text-[#b8c1ec] hover:text-[#eebbc3] transition-colors">
             <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
             Back to Job Details
           </button>
 
-          <div className="bg-white rounded-lg shadow-lg p-8">
-            <h1 className="text-3xl font-bold text-gray-800 mb-2">Apply for {applicationData.position}</h1>
-            <p className="text-gray-600 mb-8">Fill out the form below to submit your application</p>
+          <div className="bg-gradient-to-br from-[#121629] to-[#232946] rounded-2xl shadow-2xl p-8 border border-[#b8c1ec]/20">
+            <h1 className="text-3xl font-bold text-[#fffffe] mb-2">Apply for {applicationData.position}</h1>
+            <p className="text-[#b8c1ec] mb-8">Fill out the form below to submit your application</p>
 
             <form className="space-y-6" onSubmit={handleSubmitApplication}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -164,20 +164,20 @@ const InternshipPage = () => {
                   { label: "Resume Link", name: "resume" },
                 ].map(({ label, name }) => (
                   <div key={name}>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">{label}</label>
+                    <label className="block text-sm font-medium text-[#b8c1ec] mb-2">{label}</label>
                     <input
                       type="text"
                       name={name}
                       value={applicationData[name]}
                       onChange={handleInputChange}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                      className="w-full px-4 py-3 bg-[#232946] border border-[#b8c1ec]/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#eebbc3] focus:border-transparent text-[#fffffe] placeholder-[#b8c1ec]/50"
                       required={label.includes("*")}
                     />
                   </div>
                 ))}
               </div>
 
-              <button type="submit" className="bg-green-500 text-white px-6 py-2 rounded-md hover:bg-green-600">
+              <button type="submit" className="w-full bg-gradient-to-r from-[#eebbc3] to-[#b8c1ec] text-[#232946] font-bold py-4 px-8 rounded-xl hover:from-[#b8c1ec] hover:to-[#eebbc3] transition-all duration-300 shadow-lg hover:shadow-xl hover:transform hover:scale-105">
                 Submit Application
               </button>
             </form>
@@ -189,22 +189,22 @@ const InternshipPage = () => {
 
   if (selectedRole) {
     return (
-      <div className="container mx-auto px-4 py-12">
-        <div className="max-w-4xl mx-auto">
-          <button onClick={handleBackToRoles} className="mb-6 flex items-center text-blue-600 hover:text-blue-800 transition-colors">
+      <div className="min-h-screen bg-gradient-to-br from-[#232946] via-[#121629] to-[#232946] text-[#fffffe] py-12">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6">
+          <button onClick={handleBackToRoles} className="mb-6 flex items-center text-[#b8c1ec] hover:text-[#eebbc3] transition-colors">
             <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
             Back to All Positions
           </button>
 
-          <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-            <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-8 py-12 text-white">
+          <div className="bg-gradient-to-br from-[#121629] to-[#232946] rounded-2xl shadow-2xl overflow-hidden border border-[#b8c1ec]/20">
+            <div className="bg-gradient-to-r from-[#eebbc3] to-[#b8c1ec] px-8 py-12 text-[#232946]">
               <h1 className="text-4xl font-bold mb-4">{selectedRole.title} Internship</h1>
               <p className="text-xl opacity-90 mb-6">{selectedRole.description}</p>
               <div className="flex flex-wrap gap-2">
                 {selectedRole.skills.map((skill, i) => (
-                  <span key={i} className="bg-blue-500 bg-opacity-50 px-3 py-1 rounded-full text-sm">{skill}</span>
+                  <span key={i} className="bg-[#232946]/20 px-4 py-2 rounded-full text-sm font-medium">{skill}</span>
                 ))}
               </div>
             </div>
@@ -212,23 +212,23 @@ const InternshipPage = () => {
             <div className="p-8">
               <div className="grid md:grid-cols-2 gap-8 mb-8">
                 <div>
-                  <h3 className="text-2xl font-bold text-gray-800 mb-4">Key Details</h3>
+                  <h3 className="text-2xl font-bold text-[#fffffe] mb-4">Key Details</h3>
                   <ul className="space-y-3">
                     {selectedRole.items.map((item, i) => (
                       <li key={i} className="flex items-center">
-                        <span className="bg-green-100 rounded-full p-1 mr-3">
-                          <svg className="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                        <span className="bg-gradient-to-r from-[#eebbc3] to-[#b8c1ec] rounded-full p-1 mr-3">
+                          <svg className="w-4 h-4 text-[#232946]" fill="currentColor" viewBox="0 0 20 20">
                             <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                           </svg>
                         </span>
-                        <span className="text-gray-700">{item}</span>
+                        <span className="text-[#b8c1ec]">{item}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
-                <div className="bg-blue-50 p-6 rounded-lg">
-                  <h4 className="text-lg font-semibold text-blue-800 mb-3">What You'll Gain</h4>
-                  <ul className="text-blue-700 space-y-2">
+                <div className="bg-gradient-to-br from-[#232946] to-[#121629] p-6 rounded-xl border border-[#b8c1ec]/20">
+                  <h4 className="text-lg font-semibold text-[#eebbc3] mb-3">What You'll Gain</h4>
+                  <ul className="text-[#b8c1ec] space-y-2">
                     <li>• Hands-on experience with industry tools</li>
                     <li>• Mentorship from experienced professionals</li>
                     <li>• Certificate of completion</li>
@@ -239,27 +239,27 @@ const InternshipPage = () => {
               </div>
 
               <div className="mb-8">
-                <h3 className="text-2xl font-bold text-gray-800 mb-4">Responsibilities</h3>
+                <h3 className="text-2xl font-bold text-[#fffffe] mb-4">Responsibilities</h3>
                 <ul className="grid md:grid-cols-2 gap-3">
                   {selectedRole.responsibilities.map((res, i) => (
-                    <li key={i} className="text-gray-700 text-sm">- {res}</li>
+                    <li key={i} className="text-[#b8c1ec] text-sm">- {res}</li>
                   ))}
                 </ul>
               </div>
 
               <div className="mb-8">
-                <h3 className="text-2xl font-bold text-gray-800 mb-4">Requirements</h3>
+                <h3 className="text-2xl font-bold text-[#fffffe] mb-4">Requirements</h3>
                 <ul className="grid md:grid-cols-2 gap-3">
                   {selectedRole.requirements.map((req, i) => (
-                    <li key={i} className="text-gray-700 text-sm">- {req}</li>
+                    <li key={i} className="text-[#b8c1ec] text-sm">- {req}</li>
                   ))}
                 </ul>
               </div>
 
-              <div className="bg-gradient-to-r from-green-50 to-blue-50 p-6 rounded-lg text-center">
-                <h4 className="text-xl font-semibold text-gray-800 mb-3">Ready to Get Started?</h4>
-                <p className="text-gray-600 mb-4">Join our team and make a real impact in education technology!</p>
-                <button onClick={() => handleApplyNow(selectedRole.title)} className="px-8 py-3 bg-green-500 hover:bg-green-600 text-white font-bold rounded-full transition duration-300 transform hover:scale-105">
+              <div className="bg-gradient-to-r from-[#eebbc3]/10 to-[#b8c1ec]/10 p-6 rounded-xl text-center border border-[#b8c1ec]/20">
+                <h4 className="text-xl font-semibold text-[#fffffe] mb-3">Ready to Get Started?</h4>
+                <p className="text-[#b8c1ec] mb-4">Join our team and make a real impact in education technology!</p>
+                <button onClick={() => handleApplyNow(selectedRole.title)} className="px-8 py-3 bg-gradient-to-r from-[#eebbc3] to-[#b8c1ec] text-[#232946] font-bold rounded-xl hover:from-[#b8c1ec] hover:to-[#eebbc3] transition-all duration-300 transform hover:scale-105 shadow-lg">
                   Apply Now
                 </button>
               </div>
@@ -271,148 +271,202 @@ const InternshipPage = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-12">
+    <div className="min-h-screen bg-gradient-to-br from-[#232946] via-[#121629] to-[#232946] text-[#fffffe]">
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-blue-600 to-blue-700 shadow-lg rounded-lg p-8 mb-10 max-w-4xl mx-auto text-center">
-        <h1 className="text-3xl font-bold text-white mb-4">
-          Join Our Internship Program
-        </h1>
-        <p className="text-white mb-6">
-          Gain real-world experience and kickstart your career in education technology
-        </p>
-        <button
-          onClick={() => handleApplyNow('General')}
-          className="px-6 py-3 text-white font-bold bg-green-500 hover:bg-green-600 transition duration-300 rounded-full"
-        >
-          Apply Now
-        </button>
-      </div>
-
-      {/* Available Positions */}
-      <div className="max-w-4xl mx-auto">
-        <h2 className="text-2xl font-bold mb-6 text-center">
-          Available Positions
-        </h2>
-
-        <div className="grid md:grid-cols-3 gap-6">
-          {roles.map((role, idx) => (
-            <div
-              key={idx}
-              className="bg-white shadow-md rounded-lg p-6 hover:shadow-lg transition-shadow"
-            >
-              <h3 className="text-xl font-semibold text-blue-700 mb-4">
-                {role.title}
-              </h3>
-              <ul className="mb-6 space-y-2">
-                {role.items.map((item, i) => (
-                  <li key={i} className="flex items-center">
-                    <span className="bg-blue-100 rounded-full p-1 mr-2">
-                      <svg
-                        className="w-4 h-4 text-blue-600"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    </span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
+      <section className="relative py-20 px-4 sm:px-6 overflow-hidden">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-10 left-10 w-20 h-20 bg-[#eebbc3] rounded-full blur-xl"></div>
+          <div className="absolute bottom-10 right-10 w-32 h-32 bg-[#b8c1ec] rounded-full blur-xl"></div>
+          <div className="absolute top-1/2 left-1/2 w-40 h-40 bg-[#eebbc3] rounded-full blur-2xl transform -translate-x-1/2 -translate-y-1/2"></div>
+        </div>
+        
+        <div className="relative max-w-6xl mx-auto">
+          <div className="bg-gradient-to-br from-[#121629] to-[#232946] rounded-3xl shadow-2xl p-12 border border-[#b8c1ec]/20">
+            <div className="text-center">
+              <h1 className="text-5xl font-bold mb-6 bg-gradient-to-r from-[#eebbc3] to-[#b8c1ec] bg-clip-text text-transparent">
+                Join Our Internship Program
+              </h1>
+              <p className="text-xl text-[#b8c1ec] mb-8 max-w-3xl mx-auto">
+                Gain real-world experience and kickstart your career in education technology
+              </p>
               <button
-                onClick={() => handleViewDetails(role)}
-                className="w-full py-2 px-4 bg-blue-600 text-white font-medium rounded hover:bg-blue-700 transition duration-300"
+                onClick={() => handleApplyNow('General')}
+                className="px-8 py-4 bg-gradient-to-r from-[#eebbc3] to-[#b8c1ec] text-[#232946] font-bold rounded-xl hover:from-[#b8c1ec] hover:to-[#eebbc3] transition-all duration-300 transform hover:scale-105 shadow-lg"
               >
-                View Details
+                Apply Now
               </button>
             </div>
-          ))}
+          </div>
         </div>
-      </div>
+      </section>
 
-      {/* Why Join Section */}
-      <div className="max-w-4xl mx-auto mt-16">
-        <h2 className="text-2xl font-bold mb-6 text-center">
-          Why Join EduLift?
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {[
-            {
-              icon: "🎓",
-              title: "Meaningful Learning",
-              desc: "Work on real-life projects that impact education",
-            },
-            {
-              icon: "🌍",
-              title: "Flexible Environment",
-              desc: "Enjoy remote or hybrid opportunities tailored to your schedule",
-            },
-            {
-              icon: "💼",
-              title: "Career Growth",
-              desc: "Gain mentorship, networking, and certification on completion",
-            },
-            {
-              icon: "💰",
-              title: "Stipend Support",
-              desc: "Get rewarded for your contributions during the internship",
-            },
-          ].map((point, i) => (
-            <div
-              key={i}
-              className="bg-white p-6 rounded-lg shadow-md border border-slate-100 flex"
-            >
-              <div className="flex-shrink-0 mr-4">
-                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center text-2xl text-blue-500">
-                  {point.icon}
+      {/* Available Positions */}
+      <section className="py-20 px-4 sm:px-6 bg-[#232946] relative overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute -top-40 -right-40 w-80 h-80 bg-[#eebbc3]/10 rounded-full blur-3xl"></div>
+          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-[#b8c1ec]/10 rounded-full blur-3xl"></div>
+        </div>
+        
+        <div className="relative max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold mb-4 text-[#fffffe]">
+              Available <span className="bg-gradient-to-r from-[#eebbc3] to-[#b8c1ec] bg-clip-text text-transparent">Positions</span>
+            </h2>
+            <p className="text-xl text-[#b8c1ec] max-w-3xl mx-auto">
+              Explore exciting internship opportunities that match your skills and interests
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {roles.map((role, idx) => (
+              <div
+                key={idx}
+                className="group relative"
+              >
+                <div className="bg-gradient-to-br from-[#121629] to-[#232946] p-8 rounded-2xl shadow-xl hover:shadow-2xl border border-[#b8c1ec]/10 hover:border-[#eebbc3]/30 transition-all duration-500 hover:transform hover:-translate-y-2">
+                  <h3 className="text-2xl font-bold text-[#fffffe] mb-4 group-hover:text-[#eebbc3] transition-colors duration-300">
+                    {role.title}
+                  </h3>
+                  <ul className="mb-6 space-y-2">
+                    {role.items.map((item, i) => (
+                      <li key={i} className="flex items-center">
+                        <span className="bg-gradient-to-r from-[#eebbc3] to-[#b8c1ec] rounded-full p-1 mr-3">
+                          <svg
+                            className="w-4 h-4 text-[#232946]"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                              clipRule="evenodd"
+                            />
+                          </svg>
+                        </span>
+                        <span className="text-[#b8c1ec] group-hover:text-[#fffffe] transition-colors duration-300">{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <button
+                    onClick={() => handleViewDetails(role)}
+                    className="w-full py-3 px-6 bg-gradient-to-r from-[#eebbc3] to-[#b8c1ec] text-[#232946] font-bold rounded-xl hover:from-[#b8c1ec] hover:to-[#eebbc3] transition-all duration-300 transform hover:scale-105 shadow-lg"
+                  >
+                    View Details
+                  </button>
                 </div>
               </div>
-              <div>
-                <h3 className="text-xl font-semibold text-slate-800 mb-2 pb-2 border-b border-slate-200">
-                  {point.title}
-                </h3>
-                <p className="text-slate-600">{point.desc}</p>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
+      </section>
 
-      <div className="max-w-4xl mx-auto m-10">
-        <h2 className="text-2xl font-bold mb-6 text-center">
-          Frequently Asked Questions
-        </h2>
-        <div className="bg-white p-6 rounded-lg shadow-md border border-slate-100">
-          <h3 className="text-xl font-semibold text-slate-800 mb-4">
-            How do I apply for an internship?
-          </h3>
-          <p className="text-slate-600 mb-4">
-            You can apply through our website by filling out the application form.
-          </p>
-          <h3 className="text-xl font-semibold text-slate-800 mb-4">
-            What is the duration of the internship?
-          </h3>
-          <p className="text-slate-600 mb-4">
-            The duration of the internship is typically 3 months and can vary based on type of internship.
-          </p>
-          <h3 className="text-xl font-semibold text-slate-800 mb-4">
-            Is the internship paid?
-          </h3>
-          <p className="text-slate-600 mb-4">
-            Yes, we offer a stipend for our internships.
-          </p>
-          <h3 className="text-xl font-semibold text-slate-800 mb-4">
-            What are the eligibility criteria for applying?
-          </h3>
-          <p className="text-slate-600 mb-4">
-            Candidates should be currently enrolled in a relevant degree program or have recently graduated.
-          </p>
+      {/* Why Join Section */}
+      <section className="py-20 px-4 sm:px-6 bg-[#121629] relative overflow-hidden">
+        <div className="relative max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold mb-4 text-[#fffffe]">
+              Why Join <span className="bg-gradient-to-r from-[#eebbc3] to-[#b8c1ec] bg-clip-text text-transparent">EduLift?</span>
+            </h2>
+            <p className="text-xl text-[#b8c1ec] max-w-3xl mx-auto">
+              Discover the benefits of being part of our innovative team
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {[
+              {
+                icon: "🎓",
+                title: "Meaningful Learning",
+                desc: "Work on real-life projects that impact education",
+              },
+              {
+                icon: "🌍",
+                title: "Flexible Environment",
+                desc: "Enjoy remote or hybrid opportunities tailored to your schedule",
+              },
+              {
+                icon: "💼",
+                title: "Career Growth",
+                desc: "Gain mentorship, networking, and certification on completion",
+              },
+              {
+                icon: "💰",
+                title: "Stipend Support",
+                desc: "Get rewarded for your contributions during the internship",
+              },
+            ].map((point, i) => (
+              <div
+                key={i}
+                className="group relative"
+              >
+                <div className="bg-gradient-to-br from-[#232946] to-[#121629] p-8 rounded-2xl shadow-xl hover:shadow-2xl border border-[#b8c1ec]/10 hover:border-[#eebbc3]/30 transition-all duration-500 hover:transform hover:-translate-y-2">
+                  <div className="flex items-start">
+                    <div className="flex-shrink-0 mr-6">
+                      <div className="w-16 h-16 bg-gradient-to-br from-[#eebbc3]/20 to-[#b8c1ec]/20 rounded-full flex items-center justify-center text-2xl group-hover:scale-110 transition-transform duration-300">
+                        {point.icon}
+                      </div>
+                    </div>
+                    <div>
+                      <h3 className="text-2xl font-bold text-[#fffffe] mb-3 group-hover:text-[#eebbc3] transition-colors duration-300">
+                        {point.title}
+                      </h3>
+                      <p className="text-[#b8c1ec] group-hover:text-[#fffffe] transition-colors duration-300">{point.desc}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-20 px-4 sm:px-6 bg-gradient-to-br from-[#b8c1ec] to-[#eebbc3] relative overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute top-20 left-20 w-4 h-4 bg-[#232946]/20 rounded-full animate-pulse"></div>
+          <div className="absolute bottom-32 right-32 w-6 h-6 bg-[#232946]/20 rounded-full animate-pulse delay-300"></div>
+        </div>
+        
+        <div className="relative max-w-6xl mx-auto">
+          <div className="bg-gradient-to-br from-[#232946] to-[#121629] rounded-3xl shadow-2xl p-12 border border-[#fffffe]/10">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl font-bold mb-4 text-[#fffffe]">
+                Frequently Asked <span className="bg-gradient-to-r from-[#eebbc3] to-[#b8c1ec] bg-clip-text text-transparent">Questions</span>
+              </h2>
+              <p className="text-xl text-[#b8c1ec] max-w-3xl mx-auto">
+                Everything you need to know about our internship program
+              </p>
+            </div>
+            
+            <div className="space-y-8">
+              {[
+                {
+                  question: "How do I apply for an internship?",
+                  answer: "You can apply through our website by filling out the application form for your desired position."
+                },
+                {
+                  question: "What is the duration of the internship?",
+                  answer: "The duration of the internship is typically 3 months and can vary based on the type of internship."
+                },
+                {
+                  question: "Is the internship paid?",
+                  answer: "Yes, we offer a competitive stipend for our internships to support our interns."
+                },
+                {
+                  question: "What are the eligibility criteria for applying?",
+                  answer: "Candidates should be currently enrolled in a relevant degree program or have recently graduated."
+                }
+              ].map((faq, index) => (
+                <div key={index} className="border-b border-[#b8c1ec]/20 pb-6 last:border-b-0">
+                  <h3 className="text-xl font-bold text-[#fffffe] mb-3">{faq.question}</h3>
+                  <p className="text-[#b8c1ec] leading-relaxed">{faq.answer}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 };

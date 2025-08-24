@@ -157,96 +157,99 @@ const ScholarshipsPage = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-12">
+    <div className="min-h-screen bg-gradient-to-br from-[#232946] via-[#121629] to-[#232946] text-[#fffffe]">
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-blue-100 to-blue-200 shadow-lg rounded-lg p-8 mb-10 max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold text-blue-900 mb-4">Scholarships that Change Lives</h1>
-        <p className="text-gray-700 mb-6">Discover opportunities to fund your education and achieve your academic dreams with EduLift's scholarship program.</p>
-        <button className="px-6 py-3 text-white bg-blue-600 rounded-full font-medium hover:bg-blue-800 transition duration-300">Find Scholarships</button>
-      </div>
-
-      {/* Search & Filter Section */}
-      <div className="bg-white shadow rounded-lg p-6 mb-10 max-w-4xl mx-auto border border-gray-300">
-        <h2 className="text-xl font-semibold text-gray-800 mb-4">Find the Right Scholarship</h2>
-        <div className="flex flex-col md:flex-row gap-4">
-          <input
-            type="text"
-            placeholder="Search for scholarships"
-            className="flex-grow border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-          <select
-            name="Category"
-            className="border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-            value={selectedCategory}
-            onChange={(e) => setSelectedCategory(e.target.value)}
-          >
-            <option value="">Select Category</option>
-            <option value="merit-based">Merit-Based</option>
-            <option value="need-based">Need-Based</option>
-            <option value="athletic">Athletic</option>
-            <option value="academic">Academic</option>
-            <option value="community-service">Community Service</option>
-          </select>
-          <select
-            name="Sort By"
-            className="border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-            value={sortBy}
-            onChange={(e) => setSortBy(e.target.value)}
-          >
-            <option value="">Sort By</option>
-            <option value="recent">Recent</option>
-            <option value="popular">Most Popular</option>
-            <option value="ending-soon">Ending Soon</option>
-            <option value="highest-value">Highest Value</option>
-            <option value="lowest-value">Lowest Value</option>
-          </select>
+      <section className="relative py-20 px-4 sm:px-6 overflow-hidden">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-10 left-10 w-20 h-20 bg-[#eebbc3] rounded-full blur-xl"></div>
+          <div className="absolute bottom-10 right-10 w-32 h-32 bg-[#b8c1ec] rounded-full blur-xl"></div>
+          <div className="absolute top-1/2 left-1/2 w-40 h-40 bg-[#eebbc3] rounded-full blur-2xl transform -translate-x-1/2 -translate-y-1/2"></div>
         </div>
-      </div>
-
-      {/* Featured Scholarship */}
-      {featuredScholarship && (
-        <div className="max-w-4xl mx-auto mb-10">
-          <div className="relative bg-white shadow-lg rounded-lg overflow-hidden border-l-4 border-yellow-400">
-            <div className="p-6">
-              <div className="text-xs font-bold text-yellow-500 mb-2">FEATURED</div>
-              <h3 className="text-2xl font-bold text-gray-800 mb-3">{featuredScholarship.title}</h3>
-              <p className="text-gray-600 mb-4">{featuredScholarship.description}</p>
-              <div className="flex flex-wrap items-center gap-4 mb-4">
-                <span className="font-bold text-blue-800 text-lg">{featuredScholarship.amount}</span>
-                <span className="text-gray-600">Deadline: {featuredScholarship.deadline}</span>
-              </div>
-              <button 
-                className="px-6 py-3 text-white bg-blue-600 rounded-full font-medium hover:bg-blue-800 transition duration-300"
-                onClick={() => {
-                  setSelectedScholarship(featuredScholarship)
-                  setShowModal(true)
-                }}
-              >
-                Apply Now
+        
+        <div className="relative max-w-6xl mx-auto">
+          <div className="bg-gradient-to-br from-[#121629] to-[#232946] rounded-3xl shadow-2xl p-12 border border-[#b8c1ec]/20">
+            <div className="text-center">
+              <h1 className="text-5xl font-bold mb-6 bg-gradient-to-r from-[#eebbc3] to-[#b8c1ec] bg-clip-text text-transparent">
+                Scholarships that Change Lives
+              </h1>
+              <p className="text-xl text-[#b8c1ec] mb-8 max-w-3xl mx-auto">
+                Discover opportunities to fund your education and achieve your academic dreams with EduLift's scholarship program.
+              </p>
+              <button className="px-8 py-4 bg-gradient-to-r from-[#eebbc3] to-[#b8c1ec] text-[#232946] font-bold rounded-xl hover:from-[#b8c1ec] hover:to-[#eebbc3] transition-all duration-300 transform hover:scale-105 shadow-lg">
+                Find Scholarships
               </button>
             </div>
           </div>
         </div>
-      )}
+      </section>
 
-      {/* Scholarships Grid */}
-      <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-6 mb-10">
-        {displayedScholarships.length > 0 ? (
-          displayedScholarships.map(scholarship => (
-            <div key={scholarship.id} className="bg-white shadow rounded-lg overflow-hidden">
-              <div className="p-6 border border-gray-300">
-                <h3 className="text-xl font-bold text-gray-800 mb-2">{scholarship.title}</h3>
-                <p className="text-gray-600 mb-4">{scholarship.description}</p>
-                <div className="flex flex-wrap items-center gap-4 mb-4">
-                  <span className="font-bold text-blue-800">{scholarship.amount}</span>
-                  <span className="text-gray-600 text-sm">Deadline: {scholarship.deadline}</span>
+      {/* Search & Filter Section */}
+      <section className="py-12 px-4 sm:px-6 bg-[#232946] relative overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute -top-40 -right-40 w-80 h-80 bg-[#eebbc3]/10 rounded-full blur-3xl"></div>
+          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-[#b8c1ec]/10 rounded-full blur-3xl"></div>
+        </div>
+        
+        <div className="relative max-w-6xl mx-auto">
+          <div className="bg-gradient-to-br from-[#121629] to-[#232946] rounded-2xl shadow-2xl p-8 border border-[#b8c1ec]/20">
+            <h2 className="text-2xl font-bold text-[#fffffe] mb-6">Find the Right Scholarship</h2>
+            <div className="flex flex-col md:flex-row gap-4">
+              <input
+                type="text"
+                placeholder="Search for scholarships"
+                className="flex-grow bg-[#232946] border border-[#b8c1ec]/30 rounded-xl px-4 py-3 w-full focus:outline-none focus:ring-2 focus:ring-[#eebbc3] focus:border-transparent text-[#fffffe] placeholder-[#b8c1ec]/50"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+              <select
+                name="Category"
+                className="bg-[#232946] border border-[#b8c1ec]/30 rounded-xl px-4 py-3 w-full focus:outline-none focus:ring-2 focus:ring-[#eebbc3] focus:border-transparent text-[#fffffe]"
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.target.value)}
+              >
+                <option value="">Select Category</option>
+                <option value="merit-based">Merit-Based</option>
+                <option value="need-based">Need-Based</option>
+                <option value="athletic">Athletic</option>
+                <option value="academic">Academic</option>
+                <option value="community-service">Community Service</option>
+              </select>
+              <select
+                name="Sort By"
+                className="bg-[#232946] border border-[#b8c1ec]/30 rounded-xl px-4 py-3 w-full focus:outline-none focus:ring-2 focus:ring-[#eebbc3] focus:border-transparent text-[#fffffe]"
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+              >
+                <option value="">Sort By</option>
+                <option value="recent">Recent</option>
+                <option value="popular">Most Popular</option>
+                <option value="ending-soon">Ending Soon</option>
+                <option value="highest-value">Highest Value</option>
+                <option value="lowest-value">Lowest Value</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Scholarship */}
+      {featuredScholarship && (
+        <section className="py-12 px-4 sm:px-6 bg-[#121629] relative overflow-hidden">
+          <div className="relative max-w-6xl mx-auto">
+            <div className="bg-gradient-to-br from-[#232946] to-[#121629] rounded-2xl shadow-2xl overflow-hidden border-l-4 border-[#eebbc3]">
+              <div className="p-8">
+                <div className="text-sm font-bold text-[#eebbc3] mb-3">FEATURED</div>
+                <h3 className="text-3xl font-bold text-[#fffffe] mb-4">{featuredScholarship.title}</h3>
+                <p className="text-[#b8c1ec] mb-6 text-lg">{featuredScholarship.description}</p>
+                <div className="flex flex-wrap items-center gap-6 mb-6">
+                  <span className="font-bold text-[#eebbc3] text-2xl">{featuredScholarship.amount}</span>
+                  <span className="text-[#b8c1ec]">Deadline: {featuredScholarship.deadline}</span>
                 </div>
                 <button 
-                  className="px-4 py-2 bg-blue-700 text-white rounded-full text-sm font-medium hover:bg-blue-800 transition duration-300"
+                  className="px-8 py-4 bg-gradient-to-r from-[#eebbc3] to-[#b8c1ec] text-[#232946] font-bold rounded-xl hover:from-[#b8c1ec] hover:to-[#eebbc3] transition-all duration-300 transform hover:scale-105 shadow-lg"
                   onClick={() => {
-                    setSelectedScholarship(scholarship)
+                    setSelectedScholarship(featuredScholarship)
                     setShowModal(true)
                   }}
                 >
@@ -254,58 +257,99 @@ const ScholarshipsPage = () => {
                 </button>
               </div>
             </div>
-          ))
-        ) : (
-          <div className="col-span-2 text-center py-8 text-gray-500">
-            No scholarships found matching your criteria.
           </div>
-        )}
-      </div>
+        </section>
+      )}
+
+      {/* Scholarships Grid */}
+      <section className="py-12 px-4 sm:px-6 bg-[#232946] relative overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute -top-40 -right-40 w-80 h-80 bg-[#eebbc3]/10 rounded-full blur-3xl"></div>
+          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-[#b8c1ec]/10 rounded-full blur-3xl"></div>
+        </div>
+        
+        <div className="relative max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-8">
+            {displayedScholarships.length > 0 ? (
+              displayedScholarships.map(scholarship => (
+                <div key={scholarship.id} className="group relative">
+                  <div className="bg-gradient-to-br from-[#121629] to-[#232946] p-8 rounded-2xl shadow-xl hover:shadow-2xl border border-[#b8c1ec]/10 hover:border-[#eebbc3]/30 transition-all duration-500 hover:transform hover:-translate-y-2">
+                    <h3 className="text-2xl font-bold text-[#fffffe] mb-4 group-hover:text-[#eebbc3] transition-colors duration-300">{scholarship.title}</h3>
+                    <p className="text-[#b8c1ec] mb-6 group-hover:text-[#fffffe] transition-colors duration-300">{scholarship.description}</p>
+                    <div className="flex flex-wrap items-center gap-4 mb-6">
+                      <span className="font-bold text-[#eebbc3] text-xl">{scholarship.amount}</span>
+                      <span className="text-[#b8c1ec] text-sm">Deadline: {scholarship.deadline}</span>
+                    </div>
+                    <button 
+                      className="px-6 py-3 bg-gradient-to-r from-[#eebbc3] to-[#b8c1ec] text-[#232946] font-bold rounded-xl hover:from-[#b8c1ec] hover:to-[#eebbc3] transition-all duration-300 transform hover:scale-105 shadow-lg"
+                      onClick={() => {
+                        setSelectedScholarship(scholarship)
+                        setShowModal(true)
+                      }}
+                    >
+                      Apply Now
+                    </button>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="col-span-2 text-center py-12 text-[#b8c1ec]">
+                <div className="text-6xl mb-4">🔍</div>
+                <p className="text-xl">No scholarships found matching your criteria.</p>
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
 
       {/* Pagination */}
       {totalPages > 0 && (
-        <div className="flex justify-center max-w-4xl mx-auto">
-          <div className="inline-flex bg-white rounded shadow overflow-hidden">
-            <button 
-              className="px-3 py-2 border-r border-gray-200 text-gray-600 hover:bg-gray-100 disabled:opacity-50"
-              onClick={() => handlePageChange(currentPage - 1)}
-              disabled={currentPage === 1}
-            >
-              ◀
-            </button>
-            
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map(pageNum => (
-              <button
-                key={pageNum}
-                className={`px-3 py-2 border-r border-gray-200 ${
-                  currentPage === pageNum ? 'bg-blue-700 text-white' : 'text-gray-600 hover:bg-gray-100'
-                }`}
-                onClick={() => handlePageChange(pageNum)}
-              >
-                {pageNum}
-              </button>
-            ))}
-            
-            <button 
-              className="px-3 py-2 text-gray-600 hover:bg-gray-100 disabled:opacity-50"
-              onClick={() => handlePageChange(currentPage + 1)}
-              disabled={currentPage === totalPages}
-            >
-              ▶
-            </button>
+        <section className="py-12 px-4 sm:px-6 bg-[#121629] relative overflow-hidden">
+          <div className="relative max-w-6xl mx-auto">
+            <div className="flex justify-center">
+              <div className="inline-flex bg-gradient-to-br from-[#232946] to-[#121629] rounded-2xl shadow-2xl overflow-hidden border border-[#b8c1ec]/20">
+                <button 
+                  className="px-4 py-3 border-r border-[#b8c1ec]/20 text-[#b8c1ec] hover:text-[#eebbc3] hover:bg-[#232946] disabled:opacity-50 transition-colors duration-300"
+                  onClick={() => handlePageChange(currentPage - 1)}
+                  disabled={currentPage === 1}
+                >
+                  ◀
+                </button>
+                
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map(pageNum => (
+                  <button
+                    key={pageNum}
+                    className={`px-4 py-3 border-r border-[#b8c1ec]/20 transition-colors duration-300 ${
+                      currentPage === pageNum ? 'bg-gradient-to-r from-[#eebbc3] to-[#b8c1ec] text-[#232946] font-bold' : 'text-[#b8c1ec] hover:text-[#eebbc3] hover:bg-[#232946]'
+                    }`}
+                    onClick={() => handlePageChange(pageNum)}
+                  >
+                    {pageNum}
+                  </button>
+                ))}
+                
+                <button 
+                  className="px-4 py-3 text-[#b8c1ec] hover:text-[#eebbc3] hover:bg-[#232946] disabled:opacity-50 transition-colors duration-300"
+                  onClick={() => handlePageChange(currentPage + 1)}
+                  disabled={currentPage === totalPages}
+                >
+                  ▶
+                </button>
+              </div>
+            </div>
           </div>
-        </div>
+        </section>
       )}
 
       {/* Application Modal */}
       {showModal && selectedScholarship && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-lg shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto">
-            <div className="p-6">
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-xl font-bold text-gray-800">Apply for Scholarship</h3>
+          <div className="bg-gradient-to-br from-[#121629] to-[#232946] rounded-2xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto border border-[#b8c1ec]/20">
+            <div className="p-8">
+              <div className="flex justify-between items-center mb-6">
+                <h3 className="text-2xl font-bold text-[#fffffe]">Apply for Scholarship</h3>
                 <button 
-                  className="text-gray-500 hover:text-gray-700"
+                  className="text-[#b8c1ec] hover:text-[#eebbc3] transition-colors duration-300"
                   onClick={() => setShowModal(false)}
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -314,19 +358,19 @@ const ScholarshipsPage = () => {
                 </button>
               </div>
               
-              <div className="mb-4">
-                <h4 className="font-bold text-blue-800 mb-1">{selectedScholarship.title}</h4>
-                <p className="text-sm text-gray-600">Deadline: {selectedScholarship.deadline}</p>
-                <p className="text-lg font-bold text-blue-700 mt-1">{selectedScholarship.amount}</p>
+              <div className="mb-6 p-4 bg-gradient-to-br from-[#232946] to-[#121629] rounded-xl border border-[#b8c1ec]/20">
+                <h4 className="font-bold text-[#eebbc3] mb-2">{selectedScholarship.title}</h4>
+                <p className="text-sm text-[#b8c1ec]">Deadline: {selectedScholarship.deadline}</p>
+                <p className="text-xl font-bold text-[#eebbc3] mt-2">{selectedScholarship.amount}</p>
               </div>
               
-              <form className="space-y-4">
+              <form className="space-y-6">
                 <div>
-                  <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
+                  <label className="block text-[#b8c1ec] text-sm font-bold mb-2" htmlFor="name">
                     Full Name
                   </label>
                   <input
-                    className="border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="bg-[#232946] border border-[#b8c1ec]/30 rounded-xl px-4 py-3 w-full focus:outline-none focus:ring-2 focus:ring-[#eebbc3] focus:border-transparent text-[#fffffe] placeholder-[#b8c1ec]/50"
                     id="name"
                     type="text"
                     placeholder="Enter your full name"
@@ -334,11 +378,11 @@ const ScholarshipsPage = () => {
                 </div>
                 
                 <div>
-                  <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
+                  <label className="block text-[#b8c1ec] text-sm font-bold mb-2" htmlFor="email">
                     Email Address
                   </label>
                   <input
-                    className="border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="bg-[#232946] border border-[#b8c1ec]/30 rounded-xl px-4 py-3 w-full focus:outline-none focus:ring-2 focus:ring-[#eebbc3] focus:border-transparent text-[#fffffe] placeholder-[#b8c1ec]/50"
                     id="email"
                     type="email"
                     placeholder="Enter your email address"
@@ -346,11 +390,11 @@ const ScholarshipsPage = () => {
                 </div>
                 
                 <div>
-                  <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="phone">
+                  <label className="block text-[#b8c1ec] text-sm font-bold mb-2" htmlFor="phone">
                     Phone Number
                   </label>
                   <input
-                    className="border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="bg-[#232946] border border-[#b8c1ec]/30 rounded-xl px-4 py-3 w-full focus:outline-none focus:ring-2 focus:ring-[#eebbc3] focus:border-transparent text-[#fffffe] placeholder-[#b8c1ec]/50"
                     id="phone"
                     type="tel"
                     placeholder="Enter your phone number"
@@ -358,11 +402,11 @@ const ScholarshipsPage = () => {
                 </div>
                 
                 <div>
-                  <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="institution">
+                  <label className="block text-[#b8c1ec] text-sm font-bold mb-2" htmlFor="institution">
                     Educational Institution
                   </label>
                   <input
-                    className="border border-gray-300 rounded-lg px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="bg-[#232946] border border-[#b8c1ec]/30 rounded-xl px-4 py-3 w-full focus:outline-none focus:ring-2 focus:ring-[#eebbc3] focus:border-transparent text-[#fffffe] placeholder-[#b8c1ec]/50"
                     id="institution"
                     type="text"
                     placeholder="Enter your school/college name"
@@ -370,28 +414,28 @@ const ScholarshipsPage = () => {
                 </div>
                 
                 <div>
-                  <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="resume">
+                  <label className="block text-[#b8c1ec] text-sm font-bold mb-2" htmlFor="resume">
                     Upload Resume
                   </label>
-                  <div className="border border-dashed border-gray-300 rounded-lg px-4 py-4 bg-gray-50">
+                  <div className="border border-dashed border-[#b8c1ec]/30 rounded-xl px-6 py-6 bg-[#232946]">
                     <input
                       type="file"
                       id="resume"
                       className="hidden"
                     />
                     <label htmlFor="resume" className="flex flex-col items-center cursor-pointer">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-gray-400 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-[#b8c1ec] mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
                       </svg>
-                      <span className="text-sm text-gray-500">Click to upload your resume (PDF, DOC, DOCX)</span>
+                      <span className="text-sm text-[#b8c1ec] text-center">Click to upload your resume (PDF, DOC, DOCX)</span>
                     </label>
                   </div>
                 </div>
                 
-                <div className="pt-2">
+                <div className="pt-4">
                   <button
                     type="button"
-                    className="w-full px-4 py-2 bg-blue-700 text-white rounded-lg font-medium hover:bg-blue-800 transition duration-300"
+                    className="w-full px-6 py-4 bg-gradient-to-r from-[#eebbc3] to-[#b8c1ec] text-[#232946] font-bold rounded-xl hover:from-[#b8c1ec] hover:to-[#eebbc3] transition-all duration-300 transform hover:scale-105 shadow-lg"
                     onClick={() => {
                       alert('Application submitted successfully! We will contact you soon.')
                       setShowModal(false)
