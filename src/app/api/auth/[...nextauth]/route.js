@@ -1,14 +1,14 @@
 import NextAuth from "next-auth";
-import GoogleProvider from "next-auth/providers/google";
-import LinkedinProvider from "next-auth/providers/linkedin";
+import Google from "next-auth/providers/google";
+import LinkedIn from "next-auth/providers/linkedin";
 
-const handler = NextAuth({
+export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [
-    GoogleProvider({
+    Google({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET
     }),
-    LinkedinProvider({
+    LinkedIn({
       clientId: process.env.LINKEDIN_CLIENT_ID,
       clientSecret: process.env.LINKEDIN_CLIENT_SECRET
     })
@@ -20,13 +20,15 @@ const handler = NextAuth({
     async signIn({ user }) {
       try {
         // Use localStorage or DB to track if email is sent; for now always send
-        await fetch(`${process.env.NEXTAUTH_URL}/api/send-welcome-email`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({ email: user.email })
-        });
+        if (process.env.NEXTAUTH_URL) {
+          await fetch(`${process.env.NEXTAUTH_URL}/api/send-welcome-email`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ email: user.email })
+          });
+        }
       } catch (err) {
         console.error("Failed to send welcome email", err);
       }
@@ -36,4 +38,4 @@ const handler = NextAuth({
   }
 });
 
-export { handler as GET, handler as POST };
+export const { GET, POST } = handlers;

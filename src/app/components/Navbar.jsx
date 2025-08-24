@@ -176,7 +176,7 @@ export default function Navbar() {
             {navItems.map((item) => (
               <Link 
                 key={item} 
-                href={item === 'Home' ? '/' : `/${item.toLowerCase()}`}
+                href={item === 'Home' ? '/' : `/${item}`}
                 className="hover:bg-[#eebbc3] hover:text-[#232946] font-medium transition-colors duration-300 px-4 py-2 rounded-md"
                 onClick={() => setIsMenuOpen(false)}
               >
@@ -192,14 +192,14 @@ export default function Navbar() {
                   <p className="text-sm text-[#232946]">{userProfile.email}</p>
                 </div>
                 <Link 
-                  href="/profile" 
+                  href="/Profile" 
                   className="block hover:bg-[#b8c1ec] hover:text-[#232946] font-medium transition-colors duration-300 px-4 py-2 rounded-md"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   View Profile
                 </Link>
                 <Link 
-                  href="/settings" 
+                  href="/Setting" 
                   className="block hover:bg-[#b8c1ec] hover:text-[#232946] font-medium transition-colors duration-300 px-4 py-2 rounded-md"
                   onClick={() => setIsMenuOpen(false)}
                 >

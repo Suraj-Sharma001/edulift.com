@@ -1,7 +1,7 @@
 import Navbar from './components/Navbar.jsx'
 import '@/app/globals.css'
 
-export const MetaData = {
+export const metadata = {
   title: "Student Aid Platform",
   description: "Empowering students to access education",
 }
