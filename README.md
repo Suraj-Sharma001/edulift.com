@@ -25,13 +25,6 @@ Styling: Tailwind CSS / Custom CSS
 
 Deployment: Vercel
 
-📂 Project Structure
-app/
-  ├── page.js          # Home Page
-  ├── components/      # Reusable UI components
-  ├── styles/          # Global styles
-  └── ...
-
 💻 Getting Started
 
 Clone the repository:
