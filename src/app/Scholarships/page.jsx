@@ -24,6 +24,7 @@ const ScholarshipsPage = () => {
     const fetchScholarships = async () => {
       try {
         setLoading(true)
+        setError(null)
         
         // Option 1: Scholarships.com API (you'll need to register for an API key)
         // const response = await fetch('https://api.scholarships.com/v1/scholarships', {
@@ -33,10 +34,21 @@ const ScholarshipsPage = () => {
         // })
         
         // Option 2: Mock API using JSON Placeholder (for testing purposes)
-        const response = await fetch('https://jsonplaceholder.typicode.com/posts')
+        const controller = new AbortController()
+        const timeoutId = setTimeout(() => controller.abort(), 10000) // 10 second timeout
+        
+        const response = await fetch('https://jsonplaceholder.typicode.com/posts', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          signal: controller.signal
+        })
+        
+        clearTimeout(timeoutId)
         
         if (!response.ok) {
-          throw new Error('Network response was not ok')
+          throw new Error(`HTTP error! status: ${response.status}`)
         }
         
         let data = await response.json()
@@ -58,7 +70,14 @@ const ScholarshipsPage = () => {
         setScholarships(data)
         setLoading(false)
       } catch (error) {
-        setError(error.message)
+        console.error('Fetch error:', error)
+        if (error.name === 'AbortError') {
+          setError('Request timed out. Please check your internet connection and try again.')
+        } else if (error.name === 'TypeError' && error.message.includes('fetch')) {
+          setError('Network error. Please check your internet connection and try again.')
+        } else {
+          setError(error.message || 'An unexpected error occurred. Please try again.')
+        }
         setLoading(false)
       }
     }
@@ -131,14 +150,31 @@ const ScholarshipsPage = () => {
     setCurrentPage(pageNum)
   }
 
+  // Handle modal close with escape key and prevent background scroll
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape' && showModal) {
+        setShowModal(false)
+      }
+    }
+
+    if (showModal) {
+      document.addEventListener('keydown', handleEscape)
+      document.body.style.overflow = 'hidden' // Prevent background scroll
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleEscape)
+      document.body.style.overflow = 'unset'
+    }
+  }, [showModal])
+
   if (loading) {
     return (
-      <div className="container mx-auto px-4 py-12">
-        <div className="flex justify-center items-center h-64">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-700 mx-auto mb-4"></div>
-            <p className="text-gray-600">Loading scholarships...</p>
-          </div>
+      <div className="min-h-screen bg-gradient-to-br from-[#232946] via-[#121629] to-[#232946] text-[#fffffe] flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-[#eebbc3] mx-auto mb-6"></div>
+          <p className="text-[#b8c1ec] text-lg">Loading scholarships...</p>
         </div>
       </div>
     )
@@ -146,11 +182,20 @@ const ScholarshipsPage = () => {
 
   if (error) {
     return (
-      <div className="container mx-auto px-4 py-12">
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded max-w-4xl mx-auto" role="alert">
-          <strong className="font-bold">Error: </strong>
-          <span className="block sm:inline">{error}</span>
-          <p className="mt-2">Please try refreshing the page or come back later.</p>
+      <div className="min-h-screen bg-gradient-to-br from-[#232946] via-[#121629] to-[#232946] text-[#fffffe] flex items-center justify-center px-4">
+        <div className="bg-gradient-to-br from-[#121629] to-[#232946] border border-[#eebbc3]/30 text-[#eebbc3] px-8 py-6 rounded-2xl max-w-2xl mx-auto shadow-2xl" role="alert">
+          <div className="text-center">
+            <div className="text-4xl mb-4">⚠️</div>
+            <strong className="font-bold text-xl block mb-2">Error: </strong>
+            <span className="block sm:inline text-[#b8c1ec] mb-4">{error}</span>
+            <p className="text-[#b8c1ec]">Please try refreshing the page or come back later.</p>
+            <button 
+              onClick={() => window.location.reload()} 
+              className="mt-4 px-6 py-3 bg-gradient-to-r from-[#eebbc3] to-[#b8c1ec] text-[#232946] font-bold rounded-xl hover:from-[#b8c1ec] hover:to-[#eebbc3] transition-all duration-300"
+            >
+              Refresh Page
+            </button>
+          </div>
         </div>
       </div>
     )
@@ -344,13 +389,14 @@ const ScholarshipsPage = () => {
       {/* Application Modal */}
       {showModal && selectedScholarship && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-gradient-to-br from-[#121629] to-[#232946] rounded-2xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto border border-[#b8c1ec]/20">
+          <div className="bg-gradient-to-br from-[#121629] to-[#232946] rounded-2xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto border border-[#b8c1ec]/20 transform transition-all duration-300 modal-content">
             <div className="p-8">
               <div className="flex justify-between items-center mb-6">
                 <h3 className="text-2xl font-bold text-[#fffffe]">Apply for Scholarship</h3>
                 <button 
-                  className="text-[#b8c1ec] hover:text-[#eebbc3] transition-colors duration-300"
+                  className="text-[#b8c1ec] hover:text-[#eebbc3] transition-colors duration-300 p-2 rounded-lg hover:bg-[#232946] touch-manipulation"
                   onClick={() => setShowModal(false)}
+                  aria-label="Close modal"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
