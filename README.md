@@ -1,38 +1,88 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+EduLift 🎓✨
 
-## Getting Started
+EduLift is a platform designed to help students easily discover scholarships and internship opportunities.
+The project has been built using Next.js and aims to empower students by providing financial aid resources, career support, and mentorship.
 
-First, run the development server:
+🌐 Live Demo: https://edulift-six.vercel.app/
 
-```bash
+🚀 Features
+
+🎯 Personalized Scholarship Recommendations
+
+💼 Micro-Internship Opportunities for practical experience
+
+👥 Community & Mentorship Support
+
+🔔 Application deadline reminders
+
+🛠️ Built with Next.js for scalability and performance
+
+🛠️ Tech Stack
+
+Frontend: Next.js (React)
+
+Styling: Tailwind CSS / Custom CSS
+
+Deployment: Vercel
+
+📂 Project Structure
+app/
+  ├── page.js          # Home Page
+  ├── components/      # Reusable UI components
+  ├── styles/          # Global styles
+  └── ...
+
+💻 Getting Started
+
+Clone the repository:
+
+git clone https://github.com/your-username/edulift.git
+cd edulift
+
+
+Install dependencies:
+
+npm install
+# or
+yarn install
+# or
+pnpm install
+# or
+bun install
+
+
+Run the development server:
+
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+Open http://localhost:3000
+ in your browser.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+🚢 Deployment
 
-## Learn More
+The easiest way to deploy this project is with Vercel
+.
+Check out the Next.js deployment documentation
+ for more details.
 
-To learn more about Next.js, take a look at the following resources:
+📌 Roadmap
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+ Add user authentication
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+ Build scholarships dashboard
 
-## Deploy on Vercel
+ Enable internship applications
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+ Expand mentorship/community features
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+🤝 Contributing
 
-# edulift.com
+Contributions are always welcome!
+If you’d like to improve this project, feel free to fork the repo and submit a pull request.
+
+📜 License
+
+This project is licensed under the MIT License.
