@@ -40,7 +40,7 @@ const page = () => {
                   Meet The <span className="bg-gradient-to-r from-[#eebbc3] to-[#b8c1ec] bg-clip-text text-transparent">Creator</span>
                 </h2>
                 <p className="text-xl text-[#b8c1ec] max-w-3xl mx-auto">
-                  The passionate mind behind EduLift's mission to transform education
+                  The passionate mind behind EduLift&apos;s mission to transform education
                 </p>
               </div>
               

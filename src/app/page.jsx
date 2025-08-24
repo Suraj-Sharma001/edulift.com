@@ -25,7 +25,7 @@ export default function Home() {
 
   const testimonials = [
     {
-      quote: "EduLift helped me discover a scholarship I didn't know I qualified for. I'm now pursuing my dream degree!",
+      quote: "EduLift helped me discover a scholarship I didn&apos;t know I qualified for. I&apos;m now pursuing my dream degree!",
       name: "Alex Johnson",
       program: "Computer Science Major",
       avatar: "AJ"
@@ -171,7 +171,7 @@ export default function Home() {
                     <span className="block text-[#232946]">Educational Journey?</span>
                   </h2>
                   <p className="mb-8 text-lg leading-relaxed">
-                    Join thousands of students who've unlocked their potential and found amazing educational opportunities through EduLift.
+                    Join thousands of students who&apos;ve unlocked their potential and found amazing educational opportunities through EduLift.
                   </p>
                   <Link href="/SignUp" className="group inline-flex items-center bg-[#232946] text-[#fffffe] font-bold py-4 px-8 rounded-xl hover:bg-[#121629] transition-all duration-300 shadow-lg hover:shadow-xl hover:transform hover:scale-105">
                     <span>Start Your Journey</span>
@@ -183,7 +183,7 @@ export default function Home() {
               </div>
               
               <div className="md:w-1/2 p-12 bg-gradient-to-br from-[#232946] to-[#121629]">
-                <h3 className="text-2xl font-bold mb-8 text-[#eebbc3]">What You'll Get:</h3>
+                <h3 className="text-2xl font-bold mb-8 text-[#eebbc3]">What You&apos;ll Get:</h3>
                 <div className="space-y-4">
                   {benefits.map((benefit, index) => (
                     <div key={index} className="flex items-start group">
@@ -227,7 +227,7 @@ export default function Home() {
                 <div className="bg-gradient-to-br from-[#232946] to-[#121629] p-8 rounded-2xl shadow-xl hover:shadow-2xl border border-[#b8c1ec]/20 hover:border-[#eebbc3]/40 transition-all duration-500 hover:transform hover:-translate-y-1 h-full flex flex-col">
                   {/* Quote decoration */}
                   <div className="text-[#eebbc3] text-6xl mb-4 opacity-50 group-hover:opacity-70 transition-opacity duration-300 leading-none">
-                    "
+                    &quot;
                   </div>
                   
                   <p className="italic text-[#b8c1ec] mb-8 text-lg leading-relaxed flex-grow group-hover:text-[#fffffe] transition-colors duration-300">

@@ -219,9 +219,9 @@ const ScholarshipsPage = () => {
               <h1 className="text-5xl font-bold mb-6 bg-gradient-to-r from-[#eebbc3] to-[#b8c1ec] bg-clip-text text-transparent">
                 Scholarships that Change Lives
               </h1>
-              <p className="text-xl text-[#b8c1ec] mb-8 max-w-3xl mx-auto">
-                Discover opportunities to fund your education and achieve your academic dreams with EduLift's scholarship program.
-              </p>
+                             <p className="text-xl text-[#b8c1ec] mb-8 max-w-3xl mx-auto">
+                 Discover opportunities to fund your education and achieve your academic dreams with EduLift&apos;s scholarship program.
+               </p>
               <button className="px-8 py-4 bg-gradient-to-r from-[#eebbc3] to-[#b8c1ec] text-[#232946] font-bold rounded-xl hover:from-[#b8c1ec] hover:to-[#eebbc3] transition-all duration-300 transform hover:scale-105 shadow-lg">
                 Find Scholarships
               </button>

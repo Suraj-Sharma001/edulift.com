@@ -124,7 +124,7 @@ const page = () => {
                   Meet Our <span className="bg-gradient-to-r from-[#eebbc3] to-[#b8c1ec] bg-clip-text text-transparent">Team</span>
                 </h2>
                 <p className="text-xl text-[#b8c1ec] max-w-3xl mx-auto">
-                  The passionate individuals behind EduLift's mission to transform education
+                  The passionate individuals behind EduLift&apos;s mission to transform education
                 </p>
               </div>
               
@@ -148,7 +148,7 @@ const page = () => {
                 <div className="bg-gradient-to-br from-[#121629] to-[#232946] p-6 rounded-2xl border border-[#b8c1ec]/20">
                   <h4 className="text-lg font-semibold text-[#eebbc3] mb-4">Our Commitment</h4>
                   <p className="text-[#b8c1ec] leading-relaxed">
-                    We're committed to continuously improving our platform and expanding our network of partners 
+                    We&apos;re committed to continuously improving our platform and expanding our network of partners 
                     to provide even more opportunities for students worldwide.
                   </p>
                 </div>

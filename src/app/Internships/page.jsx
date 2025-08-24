@@ -227,7 +227,7 @@ const InternshipPage = () => {
                   </ul>
                 </div>
                 <div className="bg-gradient-to-br from-[#232946] to-[#121629] p-6 rounded-xl border border-[#b8c1ec]/20">
-                  <h4 className="text-lg font-semibold text-[#eebbc3] mb-3">What You'll Gain</h4>
+                                     <h4 className="text-lg font-semibold text-[#eebbc3] mb-3">What You&apos;ll Gain</h4>
                   <ul className="text-[#b8c1ec] space-y-2">
                     <li>• Hands-on experience with industry tools</li>
                     <li>• Mentorship from experienced professionals</li>
