@@ -46,8 +46,12 @@ async function loginUser() {
       // Trigger a storage event to update other components
       window.dispatchEvent(new Event('storage'));
       
-      // Redirect to home page
-      router.push('/');
+      // Redirect based on role
+      if (user.role === 'recruiter') {
+        router.push('/Recruiter-Dashboard');
+      } else {
+        router.push('/');
+      }
       
     } else {
       alert(data.error || 'Login failed');

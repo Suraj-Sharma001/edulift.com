@@ -65,21 +65,32 @@ export default function Navbar() {
         <Link href='/' className="text-2xl font-bold hover:text-[#eebbc3] transition-colors duration-300 flex items-center">
           <span className="mr-2">📚</span> EduLift
         </Link>
-        
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-8">
-          {navItems.map((item) => (
-            <Link 
-              key={item} 
-              href={item === 'Home' ? '/' : `/${item}`}
-              className="hover:text-[#eebbc3] font-medium transition-colors duration-300 border-b-2 border-transparent hover:border-[#eebbc3] pb-1"
-            >
-              {item}
-            </Link>
-          ))}
-          
+          {isAuthenticated && userProfile && userProfile.role === 'recruiter' ? (
+            <>
+              <Link href='/Recruiter-Dashboard' className="ml-6 hover:text-[#eebbc3] font-medium transition-colors duration-300">
+                Dashboard
+              </Link>
+              <Link href='/Manage-Internships' className="ml-6 hover:text-[#eebbc3] font-medium transition-colors duration-300">
+                Manage Internships
+              </Link>
+            </>
+          ) : (
+            <>
+              {navItems.map((item) => (
+                <Link 
+                  key={item} 
+                  href={item === 'Home' ? '/' : `/${item}`}
+                  className="hover:text-[#eebbc3] font-medium transition-colors duration-300 border-b-2 border-transparent hover:border-[#eebbc3] pb-1"
+                >
+                  {item}
+                </Link>
+              ))}
+            </>
+          )}
           {/* Profile Button for Authenticated Users */}
-          {isAuthenticated && userProfile ? ( // Check if authenticated and userProfile is set
+          {isAuthenticated && userProfile ? (
             <div className="relative ml-4">
               <button 
                 onClick={toggleProfileDropdown}
@@ -87,7 +98,7 @@ export default function Navbar() {
               >
                 <div className="w-8 h-8 bg-[#eebbc3] rounded-full flex items-center justify-center">
                   <span className="text-[#232946] font-bold text-sm">
-                    {userProfile.name.charAt(0).toUpperCase()} {/* Display first letter of name */}
+                    {userProfile.name.charAt(0).toUpperCase()}
                   </span>
                 </div>
                 <span className="font-medium">{userProfile.name}</span>
@@ -101,9 +112,8 @@ export default function Navbar() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
-              
               {/* Profile Dropdown */}
-              {showProfileDropdown && ( 
+              {showProfileDropdown && (
                 <div className="absolute right-0 mt-2 w-48 bg-[#232946] rounded-lg shadow-lg py-2 z-10">
                   <div className="px-4 py-2 border-b border-[#b8c1ec]">
                     <p className="text-sm font-medium text-[#eebbc3]">{userProfile.name}</p>
@@ -150,6 +160,7 @@ export default function Navbar() {
             </div>
           )}
         </div>
+        
         
         {/* Mobile Menu Button */}
         <button 
