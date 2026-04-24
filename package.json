@@ -9,6 +9,7 @@
     "lint": "next lint",
     "test:smoke": "node tests/smoke.js"
   },
+  "installCommand": "npm install --legacy-peer-deps",
   "dependencies": {
     "axios": "^1.11.0",
     "bcryptjs": "^3.0.2",
