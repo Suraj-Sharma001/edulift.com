@@ -3,6 +3,8 @@ import { Recruiter } from '../models/RecruiterModel';
 import bcrypt from 'bcryptjs';
 import { NextResponse } from 'next/server';
 import { connectDB } from '../config/db';
+import { sendEmail } from '../utils/sendEmail';
+import jwt from 'jsonwebtoken';
 
 // Register user
 export async function registerUser (req) {
@@ -71,16 +73,32 @@ export async function registerUser (req) {
             password: hashedPassword,
             role // Include role in the user object
         });
+
+        if(newUser) {
+            const subject = "Welcome to JobVerse 🎉";
+            const text = `Hi ${newUser.name},\n\nWelcome to JobVerse! We're excited to have you onboard.\n\n– The JobVerse Team`;
+
+            await sendEmail({ to: newUser.email, subject, text });
+        }
         
         // Save user with detailed error handling
         try {
             const savedUser  = await newUser .save();
             
-            return NextResponse.json(
+            // Generate JWT token
+            const jwtSecret = process.env.JWT_SECRET || 'dev_jwt_secret';
+            const token = jwt.sign(
+                { _id: savedUser._id, name: savedUser.name, email: savedUser.email, role: savedUser.role },
+                jwtSecret,
+                { expiresIn: '7d' }
+            );
+
+            // Build response and set HttpOnly cookie for token
+            const response = NextResponse.json(
                 { 
                     message: `${role.charAt(0).toUpperCase() + role.slice(1)} registered successfully!`,
                     ok: true,
-                    token: 'fake-token-or-real-jwt', // TODO: Replace with real JWT token generation
+                    token, // still returned for backward compatibility
                     user: {
                         _id: savedUser._id,
                         name: savedUser.name,
@@ -90,6 +108,16 @@ export async function registerUser (req) {
                 },
                 { status: 200 }
             );
+
+            response.cookies.set('token', token, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production',
+                sameSite: 'strict',
+                path: '/',
+                maxAge: 60 * 60 * 24 * 7 // 7 days
+            });
+
+            return response;
         } catch (saveError) {
             console.error('Save error details:', saveError);
 
@@ -161,11 +189,19 @@ export async function loginUser (req) {
             );
         }
       
-        // Return response with token and user data
-        return NextResponse.json({
+        // Generate JWT token for logged in user
+        const jwtSecret = process.env.JWT_SECRET || 'dev_jwt_secret';
+        const token = jwt.sign(
+            { _id: isUserExist._id, name: isUserExist.name, email: isUserExist.email, role: userRole },
+            jwtSecret,
+            { expiresIn: '7d' }
+        );
+
+        // Build response and set HttpOnly cookie
+        const response = NextResponse.json({
             message: 'Login successful',
             ok: true,
-            token: 'your-jwt-token-here', // TODO: Replace with actual JWT token generation using jsonwebtoken
+            token, // returned for backward compatibility
             user: {
                 _id: isUserExist._id,
                 name: isUserExist.name,
@@ -173,6 +209,16 @@ export async function loginUser (req) {
                 role: userRole // Include role in the response
             }
         });
+
+        response.cookies.set('token', token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict',
+            path: '/',
+            maxAge: 60 * 60 * 24 * 7
+        });
+
+        return response;
     } catch(err) {
         console.error('Unexpected login error:', err);
         return NextResponse.json(

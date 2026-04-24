@@ -1,38 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# EduLift
 
-## Getting Started
+EduLift is a Next.js application for student opportunities and hiring workflows, including:
+- Candidate and recruiter authentication
+- Scholarship applications
+- Internship applications and status tracking
 
-First, run the development server:
+## Tech Stack
+- Next.js 15 (App Router)
+- React 19
+- MongoDB + Mongoose
+- JWT authentication (HttpOnly cookie)
 
+## Environment Setup
+1. Copy `.env.example` to `.env.local`.
+2. Fill required values:
+	- `MONGO_URI`
+	- `JWT_SECRET`
+3. Optional:
+	- `EMAIL_USER` and `EMAIL_PASS` for registration email notifications
+	- `RESEND_API_KEY` and `RESEND_FROM` for welcome email endpoint
+
+## Local Development
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Production Build
+```bash
+npm run build
+npm start
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Smoke Test
+Run with the dev server running:
+```bash
+npm run test:smoke
+```
 
-## Learn More
+## API Endpoints
+- `POST /api/auth/register`
+- `POST /api/auth/login`
+- `POST /api/auth/logout`
+- `POST /api/auth/scholarship-apply`
+- `POST /api/auth/internship-apply`
+- `GET /api/auth/my-applications`
+- `PATCH /api/auth/update-application-status`
+- `GET /api/scholarships`
+- `POST /api/send-welcome-email`
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-
-# edulift.com
+## Notes
+- In production, `JWT_SECRET` must be set.
+- Authentication is cookie-based with a `token` HttpOnly cookie.
+- Recruiter internship posting screens currently use local browser storage as a temporary persistence layer and can be replaced with a dedicated backend model later.

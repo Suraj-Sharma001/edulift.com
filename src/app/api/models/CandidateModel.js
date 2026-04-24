@@ -22,6 +22,36 @@ const candidateSchema = new mongoose.Schema({
         type: String,
         default: 'candidate',
         enum: ['candidate']
+    },
+    // Profile completion fields
+    phone: {
+        type: String,
+        default: '',
+        trim: true
+    },
+    college: {
+        type: String,
+        default: '',
+        trim: true
+    },
+    degree: {
+        type: String,
+        default: '',
+        trim: true
+    },
+    graduationYear: {
+        type: String,
+        default: '',
+        trim: true
+    },
+    resume: {
+        type: String,
+        default: '',
+        trim: true
+    },
+    profileComplete: {
+        type: Boolean,
+        default: false
     }
 }, { 
     timestamps: true,

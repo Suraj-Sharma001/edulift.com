@@ -1,26 +1,21 @@
 import mongoose from 'mongoose';
 
+let cachedConnection = null;
+
 export const connectDB = async () => {
   try {
-    // Check if already connected
-    if (mongoose.connection.readyState === 1) {
-      console.log("MongoDB already connected");
-      return mongoose.connection;
+    // Reuse existing connection when available.
+    if (cachedConnection && mongoose.connection.readyState === 1) {
+      return cachedConnection;
     }
 
-    // Ensure MONGO_URI is defined
     if (!process.env.MONGO_URI) {
       throw new Error("MONGO_URI is not defined in environment variables");
     }
 
-    // Connect to MongoDB with database name and additional options
-    const conn = await mongoose.connect(process.env.MONGO_URI, {
-      dbName: 'EduLift', // Specify the database name here
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    const conn = await mongoose.connect(process.env.MONGO_URI, { dbName: 'EduLift' });
 
-    console.log(`MongoDB Connected to database: ${conn.connection.db.databaseName}`);
+    cachedConnection = conn.connection;
     return conn;
   } catch (error) {
     console.error("MongoDB Connection Error:", error);

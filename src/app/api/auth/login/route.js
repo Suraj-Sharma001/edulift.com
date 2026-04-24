@@ -1,5 +1,5 @@
-import { loginUser } from "../../controllers/userController";
+import { loginUser } from '../../controllers/userController';
 
 export async function POST(req) {
-    return loginUser(req)
+  return loginUser(req);
 }

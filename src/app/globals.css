@@ -1,60 +1,156 @@
 @import "tailwindcss";
 
- :root {
-  --background: #232946;
-  --foreground: #fffffe;
-  --accent: #eebbc3;
-  --secondary: #b8c1ec;
-  --dark: #121629;
+:root {
+  --background: #f4f8ff;
+  --foreground: #0f1f3d;
+  --brand-700: #0f3f76;
+  --brand-600: #1657a4;
+  --brand-500: #1e6fd0;
+  --brand-100: #d8e9ff;
+  --accent: #ff8a3d;
+  --mint: #12b886;
+  --surface: rgba(255, 255, 255, 0.72);
+  --surface-strong: rgba(255, 255, 255, 0.9);
+  --ring: rgba(30, 111, 208, 0.22);
+  --shadow-soft: 0 18px 40px rgba(16, 45, 91, 0.12);
+  --shadow-card: 0 10px 26px rgba(15, 54, 112, 0.12);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #121629;
-    --foreground: #b8c1ec;
-  }
+  --font-sans: var(--font-body);
+  --font-mono: var(--font-body);
 }
 
 body {
-  background: var(--background);
+  background:
+    radial-gradient(1200px 700px at 8% -10%, rgba(30, 111, 208, 0.16), transparent 70%),
+    radial-gradient(1200px 760px at 90% -20%, rgba(18, 184, 134, 0.12), transparent 72%),
+    linear-gradient(180deg, #f8fbff 0%, #edf4ff 100%);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-body), "Segoe UI", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  min-height: 100vh;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display), var(--font-body), sans-serif;
+  letter-spacing: -0.02em;
+}
+
+.app-shell {
+  min-height: 100vh;
+}
+
+.glass-panel {
+  background: var(--surface);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(14px);
+}
+
+.glass-card {
+  background: var(--surface-strong);
+  border: 1px solid rgba(20, 76, 152, 0.08);
+  box-shadow: var(--shadow-card);
+  border-radius: 20px;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  background: linear-gradient(100deg, var(--brand-600), var(--brand-500));
+  color: #ffffff;
+  font-weight: 700;
+  padding: 0.8rem 1.35rem;
+  transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
+  box-shadow: 0 8px 20px rgba(22, 87, 164, 0.33);
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  filter: saturate(1.05);
+  box-shadow: 0 12px 28px rgba(22, 87, 164, 0.36);
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  border: 1px solid rgba(30, 111, 208, 0.28);
+  background: rgba(255, 255, 255, 0.75);
+  color: var(--brand-700);
+  font-weight: 700;
+  padding: 0.78rem 1.3rem;
+  transition: all 180ms ease;
+}
+
+.btn-outline:hover {
+  background: rgba(255, 255, 255, 0.97);
+  border-color: rgba(30, 111, 208, 0.52);
+}
+
+.input-field {
+  width: 100%;
+  border-radius: 14px;
+  border: 1px solid rgba(31, 77, 143, 0.2);
+  background: rgba(255, 255, 255, 0.85);
+  padding: 0.72rem 0.95rem;
+  color: #0f1f3d;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: rgba(30, 111, 208, 0.8);
+  box-shadow: 0 0 0 4px var(--ring);
+}
+
+.fade-rise {
+  animation: fadeRise 620ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@keyframes fadeRise {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Mobile-specific improvements */
 @media (max-width: 768px) {
   html {
-    font-size: 16px; /* Prevent zoom on iOS */
+    font-size: 16px;
   }
   
-  /* Improve touch targets */
   button, a, input, select, textarea {
     min-height: 44px;
     min-width: 44px;
   }
   
-  /* Prevent horizontal scroll */
   body {
     overflow-x: hidden;
   }
   
-  /* Improve modal scrolling on mobile */
   .modal-content {
     -webkit-overflow-scrolling: touch;
   }
 }
 
-/* Prevent zoom on input focus for iOS */
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
   select,
   textarea,

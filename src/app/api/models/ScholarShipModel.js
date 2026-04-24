@@ -15,8 +15,11 @@ const scholarShipSchema = new mongoose.Schema({
     },
     contect_number: {
         type: String,
-        required: [true, 'Contact number is required'],
-        match: [/^\+?[1-9]\d{1,14}$/, 'Please provide a valid contact number']
+        default: '',
+        validate: {
+            validator: (value) => !value || /^\+?[1-9]\d{1,14}$/.test(value),
+            message: 'Please provide a valid contact number'
+        }
     },
     resume_url: {
         type: String,
@@ -33,6 +36,13 @@ const scholarShipSchema = new mongoose.Schema({
         required: [true, 'Degree is required'],
         trim: true
     },
-})
+    scholarship_title: {
+        type: String,
+        required: [true, 'Scholarship title is required'],
+        trim: true
+    },
+}, { timestamps: true })
+
+scholarShipSchema.index({ primary_email: 1, scholarship_title: 1 }, { unique: true });
 
 export const ScholarShip = mongoose.models.ScholarShip || mongoose.model('ScholarShip', scholarShipSchema);
