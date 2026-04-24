@@ -10,10 +10,31 @@ const Page = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [companySize, setCompanySize] = useState('1-10 employees');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const router = useRouter();
 
-  async function registerUser() {
+  async function registerUser(e) {
+    e.preventDefault();
+    setErrorMessage('');
+
+    if (!selectedRole) {
+      setErrorMessage('Please choose Candidate or Recruiter before creating account.');
+      return;
+    }
+
+    if (!name || !email || !password) {
+      setErrorMessage('Please fill all required fields.');
+      return;
+    }
+
+    if (password.length < 8) {
+      setErrorMessage('Password must be at least 8 characters.');
+      return;
+    }
+
+    setIsSubmitting(true);
     try {
       const res = await fetch('/api/auth/register', {
         method: 'POST',
@@ -30,36 +51,46 @@ const Page = () => {
       });
       
       const data = await res.json();
-      const {token} = data
       if(data.ok) {
-        alert(data.message || 'User registered successfully!');
-        router.push('/Login'); // Fixed path with string
-        
+        // Auto-login: server sets HttpOnly cookie; store user info locally and redirect
+        const { user } = data;
+        try {
+          localStorage.setItem('isAuthenticated', 'true');
+          const userDataForStorage = { username: user.name, email: user.email, role: user.role, _id: user._id };
+          localStorage.setItem('user', JSON.stringify(userDataForStorage));
+          window.dispatchEvent(new Event('storage'));
+        } catch (e) {
+          // ignore storage errors
+        }
+        router.push('/');
       } else {
-        alert(data.error || 'Registration failed');
+        setErrorMessage(data.error || 'Registration failed');
       }
     } catch (error) {
       console.error('Registration error:', error);
-      alert('An error occurred during registration');
+      setErrorMessage('An error occurred during registration');
+    } finally {
+      setIsSubmitting(false);
     }
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 via-blue-200 to-blue-300 p-4">
-      <div className="bg-white w-full max-w-md rounded-3xl shadow-2xl overflow-hidden">
-        <div className="px-8 py-10 bg-white">
-          <h1 className="text-4xl font-extrabold text-center text-gray-800 mb-8 tracking-tight">
+    <div className="min-h-[calc(100vh-80px)] px-4 py-8 sm:px-6 sm:py-10">
+      <div className="glass-panel fade-rise mx-auto w-full max-w-xl rounded-[28px]">
+        <div className="px-6 py-8 sm:px-10 sm:py-10">
+          <h1 className="text-center text-3xl font-extrabold text-[var(--brand-700)] sm:text-4xl">
             Create Account
           </h1>
+          <p className="mt-2 text-center text-sm text-[rgba(15,31,61,0.68)]">Launch your EduLift profile in a few steps.</p>
 
           {/* Role Selection */}
-          <div className="mb-6 flex space-x-4">
+          <div className="mb-6 mt-7 flex space-x-3">
             <button
               onClick={() => setSelectedRole('candidate')}
-              className={`w-1/2 py-3 rounded-xl transition-all duration-300 ease-in-out transform ${
+              className={`w-1/2 rounded-2xl py-3 text-sm font-semibold transition-all duration-300 ease-in-out transform ${
                 selectedRole === 'candidate'
-                  ? 'bg-blue-600 text-white scale-105 shadow-md'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  ? 'bg-[var(--brand-600)] text-white scale-[1.02] shadow-lg'
+                  : 'bg-white/80 text-[var(--brand-700)] hover:bg-white'
               }`}
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -69,10 +100,10 @@ const Page = () => {
             </button>
             <button
               onClick={() => setSelectedRole('recruiter')}
-              className={`w-1/2 py-3 rounded-xl transition-all duration-300 ease-in-out transform ${
+              className={`w-1/2 rounded-2xl py-3 text-sm font-semibold transition-all duration-300 ease-in-out transform ${
                 selectedRole === 'recruiter'
-                  ? 'bg-blue-600 text-white scale-105 shadow-md'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  ? 'bg-[var(--brand-600)] text-white scale-[1.02] shadow-lg'
+                  : 'bg-white/80 text-[var(--brand-700)] hover:bg-white'
               }`}
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -84,13 +115,13 @@ const Page = () => {
 
           {/* Conditional Rendering Based on Role */}
           {selectedRole && (
-            <div className="space-y-6">
+            <form className="space-y-6" onSubmit={registerUser}>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="mb-2 block text-sm font-semibold text-[var(--brand-700)]">
                   {selectedRole === 'candidate' ? 'Full Name' : 'Company Name'}
                 </label>
                 <div className="relative">
-                  <span className="absolute inset-y-0 left-0 flex items-center pl-3">
+                  <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
                       <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
                     </svg>
@@ -98,20 +129,22 @@ const Page = () => {
                   <input
                     type="text"
                     placeholder={selectedRole === 'candidate' ? 'Enter your full name' : 'Enter company name'}
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300"
+                    className="input-field"
+                    style={{ paddingLeft: '3rem' }}
                     value={name}
                     onChange={(e) => setName(e.target.value)}
+                    autoComplete="name"
                     required
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="mb-2 block text-sm font-semibold text-[var(--brand-700)]">
                   Email Address
                 </label>
                 <div className="relative">
-                  <span className="absolute inset-y-0 left-0 flex items-center pl-3">
+                  <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
                       <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
                       <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
@@ -120,9 +153,11 @@ const Page = () => {
                   <input
                     type="email"
                     placeholder="you@example.com"
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300"
+                    className="input-field"
+                    style={{ paddingLeft: '3rem' }}
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    autoComplete="email"
                     required
                   />
                 </div>
@@ -130,11 +165,11 @@ const Page = () => {
 
               {selectedRole === 'recruiter' && (
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="mb-2 block text-sm font-semibold text-[var(--brand-700)]">
                     Company Size
                   </label>
                   <select
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300"
+                    className="input-field"
                     value={companySize}
                     onChange={(e) => setCompanySize(e.target.value)}
                   >
@@ -148,11 +183,11 @@ const Page = () => {
               )}
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="mb-2 block text-sm font-semibold text-[var(--brand-700)]">
                   Password
                 </label>
                 <div className="relative">
-                  <span className="absolute inset-y-0 left-0 flex items-center pl-3">
+                  <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
                       <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
                     </svg>
@@ -160,27 +195,34 @@ const Page = () => {
                   <input
                     type="password"
                     placeholder="Create a strong password"
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300"
+                    className="input-field"
+                    style={{ paddingLeft: '3rem' }}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    autoComplete="new-password"
                     required
                     minLength="8"
                   />
                 </div>
               </div>
 
+              {errorMessage && (
+                <p className="rounded-xl bg-red-50 px-3 py-2 text-sm font-medium text-red-600">{errorMessage}</p>
+              )}
+
               <button 
-                className="w-full bg-blue-600 text-white py-3 rounded-xl hover:bg-blue-700 transition-all duration-300 ease-in-out transform hover:scale-[1.02] shadow-md hover:shadow-lg font-semibold tracking-wider"
-                onClick={registerUser}
+                type="submit"
+                disabled={isSubmitting}
+                className="btn-primary w-full rounded-2xl py-3.5 text-sm tracking-wide"
               >
-                Create Account
+                {isSubmitting ? 'Creating account...' : 'Create Account'}
               </button>
-            </div>
+            </form>
           )}
 
-          <div className="mt-6 text-center text-sm text-gray-600">
+          <div className="mt-6 text-center text-sm text-[rgba(15,31,61,0.72)]">
             Already have an account? 
-            <Link href="Login" className="text-blue-600 hover:text-blue-800 ml-1 font-medium">
+            <Link href="/Login" className="ml-1 font-semibold text-[var(--brand-600)] hover:text-[var(--brand-700)]">
               Log In
             </Link>
           </div>

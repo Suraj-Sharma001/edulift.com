@@ -1,5 +1,5 @@
-import { registerUser } from "../../controllers/userController"
+import { registerUser } from '../../controllers/userController';
 
 export async function POST(req) {
-    return registerUser(req)
+  return registerUser(req);
 }

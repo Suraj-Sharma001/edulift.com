@@ -1,21 +1,37 @@
 "use client"
 
-import React, { useState } from 'react';
+import React, { useState, Suspense } from 'react';
 // Importing necessary libraries and components
 import Link from 'next/link';
-import { useRouter } from 'next/navigation'; // Import useRouter to handle redirection
-import { signIn } from 'next-auth/react';
+import { useRouter, useSearchParams } from 'next/navigation'; // Import useRouter to handle redirection
 
 
-const Page = () => {
+const LoginContent = () => {
   const [selectedRole, setSelectedRole] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter(); // Initialize router for navigation
+  const searchParams = useSearchParams();
 
 
-async function loginUser() {
+async function loginUser(e) {
+  e.preventDefault();
+  setErrorMessage('');
+
+  if (!selectedRole) {
+    setErrorMessage('Please choose Candidate or Recruiter before logging in.');
+    return;
+  }
+
+  if (!email || !password) {
+    setErrorMessage('Please enter both email and password.');
+    return;
+  }
+
+  setIsSubmitting(true);
   try {
     const res = await fetch('/api/auth/login', {
       method: 'POST',
@@ -28,15 +44,18 @@ async function loginUser() {
     const data = await res.json();
     
     if(data.ok) {
-      const { token, user } = data;
+      const { user } = data;
+
+      if (user.role !== selectedRole) {
+        setErrorMessage(`This account is registered as ${user.role}. Please select ${user.role} role.`);
+        setIsSubmitting(false);
+        return;
+      }
       
-      // Store authentication data
+      // Store authentication flag and user info locally (token is set as HttpOnly cookie)
       localStorage.setItem('isAuthenticated', 'true');
-      localStorage.setItem('token', token);
-      
-      // Store user data with the correct structure for navbar
       const userDataForStorage = {
-        username: user.name, // Map 'name' to 'username' for navbar compatibility
+        username: user.name,
         email: user.email,
         role: user.role,
         _id: user._id
@@ -45,42 +64,52 @@ async function loginUser() {
       
       // Trigger a storage event to update other components
       window.dispatchEvent(new Event('storage'));
+
+      const returnUrl = searchParams.get('returnUrl');
+      const safeReturnUrl = returnUrl && returnUrl.startsWith('/') ? returnUrl : null;
       
       // Redirect based on role
-      if (user.role === 'recruiter') {
+      if (safeReturnUrl) {
+        router.push(safeReturnUrl);
+      } else if (user.role === 'recruiter') {
         router.push('/Recruiter-Dashboard');
       } else {
         router.push('/');
       }
       
     } else {
-      alert(data.error || 'Login failed');
+      setErrorMessage(data.error || 'Login failed');
     }
   } catch (error) {
     console.error('Login error:', error);
-    alert('An error occurred during login');
+    setErrorMessage('An error occurred during login');
+  } finally {
+    setIsSubmitting(false);
   }
 }
 
-  const handleOAuthLogin = async (provider) => signIn(provider, {callbackUrl: '/'});
+  const handleOAuthLogin = () => {
+    alert('OAuth login is not configured yet. Please use email and password.');
+  };
 
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 via-blue-200 to-blue-300 p-4">
-      <div className="bg-white w-full max-w-md rounded-3xl shadow-2xl overflow-hidden transform transition-all duration-300 hover:scale-105">
-        <div className="px-8 py-10 bg-white">
-          <h1 className="text-4xl font-extrabold text-center text-gray-800 mb-8 tracking-tight">
+    <div className="min-h-[calc(100vh-80px)] px-4 py-8 sm:px-6 sm:py-10">
+      <div className="glass-panel fade-rise mx-auto w-full max-w-xl rounded-[28px] transition-all duration-300">
+        <div className="px-6 py-8 sm:px-10 sm:py-10">
+          <h1 className="text-center text-3xl font-extrabold text-[var(--brand-700)] sm:text-4xl">
             Login
           </h1>
+          <p className="mt-2 text-center text-sm text-[rgba(15,31,61,0.68)]">Welcome back. Continue your learning journey.</p>
 
           {/* Role Selection */}
-          <div className="mb-6 flex space-x-4">
+          <div className="mb-6 mt-7 flex space-x-3">
             <button
               onClick={() => setSelectedRole('candidate')}
-              className={`w-1/2 py-3 rounded-xl transition-all duration-300 ease-in-out transform ${
+              className={`w-1/2 rounded-2xl py-3 text-sm font-semibold transition-all duration-300 ease-in-out transform ${
                 selectedRole === 'candidate'
-                  ? 'bg-blue-600 text-white scale-105 shadow-md'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  ? 'bg-[var(--brand-600)] text-white scale-[1.02] shadow-lg'
+                  : 'bg-white/80 text-[var(--brand-700)] hover:bg-white'
               }`}
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -90,10 +119,10 @@ async function loginUser() {
             </button>
             <button
               onClick={() => setSelectedRole('recruiter')}
-              className={`w-1/2 py-3 rounded-xl transition-all duration-300 ease-in-out transform ${
+              className={`w-1/2 rounded-2xl py-3 text-sm font-semibold transition-all duration-300 ease-in-out transform ${
                 selectedRole === 'recruiter'
-                  ? 'bg-blue-600 text-white scale-105 shadow-md'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  ? 'bg-[var(--brand-600)] text-white scale-[1.02] shadow-lg'
+                  : 'bg-white/80 text-[var(--brand-700)] hover:bg-white'
               }`}
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -104,13 +133,13 @@ async function loginUser() {
           </div>
 
           { selectedRole && (
-            <div className="space-y-6">
+            <form className="space-y-6" onSubmit={loginUser}>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="mb-2 block text-sm font-semibold text-[var(--brand-700)]">
                   {selectedRole === 'candidate' ? 'Email Address' : 'Company Email'}
                 </label>
                 <div className="relative">
-                  <span className="absolute inset-y-0 left-0 flex items-center pl-3">
+                  <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
                       <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
                       <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
@@ -119,19 +148,21 @@ async function loginUser() {
                   <input
                     type="email"
                     placeholder={selectedRole === 'candidate' ? "you@example.com" : "company@example.com"}
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300"
+                    className="input-field"
+                    style={{ paddingLeft: '3rem' }}
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    autoComplete="email"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="mb-2 block text-sm font-semibold text-[var(--brand-700)]">
                   Password
                 </label>
                 <div className="relative">
-                  <span className="absolute inset-y-0 left-0 flex items-center pl-3">
+                  <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
                       <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
                     </svg>
@@ -139,14 +170,16 @@ async function loginUser() {
                   <input
                     type={showPassword ? "text" : "password"}
                     placeholder="Enter your password"
-                    className="w-full pl-10 pr-10 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-300"
+                    className="input-field"
+                    style={{ paddingLeft: '3rem', paddingRight: '3rem' }}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    autoComplete="current-password"
                   />
                   <button 
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute inset-y-0 right-0 flex items-center pr-3"
+                    className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500"
                   >
                     {showPassword ? (
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
@@ -162,14 +195,19 @@ async function loginUser() {
                   </button>
                 </div>
               </div>
+
+              {errorMessage && (
+                <p className="rounded-xl bg-red-50 px-3 py-2 text-sm font-medium text-red-600">{errorMessage}</p>
+              )}
           
               <button 
-                className="w-full bg-blue-600 text-white py-3 rounded-xl hover:bg-blue-700 transition-all duration-300 ease-in-out transform hover:scale-[1.02] shadow-md hover:shadow-lg font-semibold tracking-wider"
-                onClick={loginUser}
+                type="submit"
+                disabled={isSubmitting}
+                className="btn-primary w-full rounded-2xl py-3.5 text-sm tracking-wide"
               >
-                Login
+                {isSubmitting ? 'Logging in...' : 'Login'}
               </button>
-            </div>
+            </form>
           )}
 
           {/* Conditional Rendering Based on Role */}
@@ -183,23 +221,25 @@ async function loginUser() {
               <div className="w-full border-t border-gray-300"></div>
             </div>
 
-            <button
-              onClick={() => handleOAuthLogin("google")}
-              className="w-full bg-red-600 hover:bg-red-700 text-white py-3 rounded-xl mb-4 transition-all shadow-md">
-              Continue with Google
-            </button>
+            <div className="flex flex-col gap-3">
+              <button
+                onClick={handleOAuthLogin}
+                className="w-full rounded-2xl bg-[#ea5a47] py-3 font-semibold text-white shadow-md transition-all hover:bg-[#d74b38]">
+                Continue with Google
+              </button>
 
-            <button
-              onClick={() => handleOAuthLogin("linkedin")}
-              className="w-full bg-[#0077b5] hover:bg-[#005f8d] text-white py-3 rounded-xl transition-all shadow-md">
-              Continue with LinkedIn
-            </button>
+              <button
+                onClick={handleOAuthLogin}
+                className="w-full rounded-2xl bg-[#0c6ea8] py-3 font-semibold text-white shadow-md transition-all hover:bg-[#0a5f90]">
+                Continue with LinkedIn
+              </button>
+            </div>
           </div>
 
 
-          <div className="mt-6 text-center text-sm text-gray-600">
+          <div className="mt-6 text-center text-sm text-[rgba(15,31,61,0.72)]">
             New Here? 
-            <Link href="/SignUp" className="text-blue-600 hover:text-blue-800 ml-1 font-medium">
+            <Link href="/SignUp" className="ml-1 font-semibold text-[var(--brand-600)] hover:text-[var(--brand-700)]">
               Create Your Account
             </Link>
           </div>
@@ -209,4 +249,4 @@ async function loginUser() {
   );
 };
 
-export default Page;
+export default function Page() { return <Suspense fallback={<div>Loading...</div>}><LoginContent /></Suspense>; }

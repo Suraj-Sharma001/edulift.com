@@ -1,5 +1,5 @@
-import { applyForScholarship } from "../../controllers/scholarshipController";
+import { applyForScholarship } from '../../controllers/scholarshipController';
 
 export async function POST(req) {
-    return applyForScholarship(req);
+  return applyForScholarship(req);
 }

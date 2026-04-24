@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test:smoke": "node tests/smoke.js"
   },
   "dependencies": {
     "axios": "^1.11.0",
@@ -17,6 +18,7 @@
     "mongoose": "^8.16.1",
     "next": "15.3.5",
     "next-auth": "^5.0.0-beta.3",
+    "nodemailer": "^6.10.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "resend": "^4.6.0"
