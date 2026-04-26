@@ -75,8 +75,8 @@ export async function registerUser (req) {
         });
 
         if(newUser) {
-            const subject = "Welcome to JobVerse 🎉";
-            const text = `Hi ${newUser.name},\n\nWelcome to JobVerse! We're excited to have you onboard.\n\n– The JobVerse Team`;
+            const subject = "Welcome to EduLift 🎉";
+            const text = `Hi ${newUser.name},\n\nWelcome to EduLift! We're excited to have you onboard.\n\n– The EduLift Team`;
 
             await sendEmail({ to: newUser.email, subject, text });
         }
