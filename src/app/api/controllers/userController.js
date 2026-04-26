@@ -78,7 +78,11 @@ export async function registerUser (req) {
             const subject = "Welcome to EduLift 🎉";
             const text = `Hi ${newUser.name},\n\nWelcome to EduLift! We're excited to have you onboard.\n\n– The EduLift Team`;
 
-            await sendEmail({ to: newUser.email, subject, text });
+            // Send email but don't block registration if it fails
+            sendEmail({ to: newUser.email, subject, text }).catch(err => {
+              console.error('Failed to send welcome email:', err.message);
+              // Continue with registration even if email fails
+            });
         }
         
         // Save user with detailed error handling

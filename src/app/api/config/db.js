@@ -9,11 +9,11 @@ export const connectDB = async () => {
       return cachedConnection;
     }
 
-    if (!'mongodb://localhost:27017/edulift') {
+    if (!process.env.MONGO_URI) {
       throw new Error("MONGO_URI is not defined in environment variables");
     }
 
-    const conn = await mongoose.connect('mongodb://localhost:27017/edulift', { dbName: 'EduLift' });
+    const conn = await mongoose.connect(process.env.MONGO_URI, { dbName: 'EduLift' });
 
     cachedConnection = conn.connection;
     return conn;
