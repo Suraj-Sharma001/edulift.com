@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import React from 'react';
 import { Github, Linkedin, Mail, Instagram } from 'lucide-react';
 
