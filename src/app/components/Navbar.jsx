@@ -25,8 +25,7 @@ export default function Navbar() {
   ];
 
   const recruiterNavItems = [
-    { label: 'Dashboard', href: '/Recruiter-Dashboard' },
-    { label: 'Manage Internships', href: '/Manage-Internships' }
+    { label: 'Dashboard', href: '/Recruiter-Dashboard' }
   ];
 
   useEffect(() => {
